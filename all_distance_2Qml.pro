@@ -10,6 +10,7 @@ SOURCES += \
         datafromdb.cpp \
         main.cpp \
         pointmatcher.cpp \
+        referencemodel.cpp \
         sessionmodel.cpp
 
 RESOURCES += qml.qrc
@@ -32,4 +33,5 @@ HEADERS += \
     datafromdb.h \
     names.h \
     pointmatcher.h \
+    referencemodel.h \
     sessionmodel.h

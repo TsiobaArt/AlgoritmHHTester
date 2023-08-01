@@ -75,7 +75,7 @@ Window { // варіант де результат передається по �
                                                    lon: dataPointsModel[match.cand_idx2].lon,
                                                    idx: match.cand_idx2
                                                },
-                                               matched: trues
+                                               matched: true
                                            });
         }
     }

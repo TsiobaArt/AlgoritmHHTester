@@ -48,6 +48,7 @@
 //---
 
 #define INFO_TABLE                        "infoTable"
+#define REFERENCE_TABLE                   "markerTable"
 
 
 #endif // NAMES_H
