@@ -8,7 +8,8 @@ QT += quick location sql
 SOURCES += \
         datafromdb.cpp \
         main.cpp \
-        pointmatcher.cpp
+        pointmatcher.cpp \
+        sessionmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -27,4 +28,6 @@ HEADERS += \
     StructData.h \
     aimuth_Vinc.h \
     datafromdb.h \
-    pointmatcher.h
+    names.h \
+    pointmatcher.h \
+    sessionmodel.h
