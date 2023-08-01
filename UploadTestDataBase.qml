@@ -115,35 +115,35 @@ Rectangle {
                     MouseArea {
                         id: mouseArea
                         anchors.fill: parent
-                        onClicked: popup.open()
+                        onClicked: settingsDialog.open()
                     }
 
-                    Popup {
-                        id: popup
-                        width: mainWindow.width / 2
-                        height:  mainWindow.height / 2
-                        anchors.centerIn: parent
-                        closePolicy: Popup.NoAutoClose
+//                    Popup {
+//                        id: popup
+//                        width: mainWindow.width / 2
+//                        height:  mainWindow.height / 2
+//                        anchors.centerIn: parent
+//                        closePolicy: Popup.NoAutoClose
 
-                        ListView {
-                            id: listView
-                            width: parent.width
-                            height: parent.height
-                            model: sessionModel
-                            delegate: ItemDelegate {
-                                width: listView.width
-                                height: customComboBox.itemHeight
-                                text: model.tableName
-                                highlighted: ListView.isCurrentItem
-                                onClicked: {
-                                    customComboBox.currentIndex = index
-                                    customComboBox.currentText = text
-                                    customComboBox.activated(index)
-                                    popup.close()
-                                }
-                            }
-                        }
-                    }
+//                        ListView {
+//                            id: listView
+//                            width: parent.width
+//                            height: parent.height
+//                            model: sessionModel
+//                            delegate: ItemDelegate {
+//                                width: listView.width
+//                                height: customComboBox.itemHeight
+//                                text: model.tableName
+//                                highlighted: ListView.isCurrentItem
+//                                onClicked: {
+//                                    customComboBox.currentIndex = index
+//                                    customComboBox.currentText = text
+//                                    customComboBox.activated(index)
+//                                    popup.close()
+//                                }
+//                            }
+//                        }
+//                    }
                 }
                 Row {
                     spacing: 5

@@ -302,17 +302,71 @@ Window { // варіант де результат передається по �
             }
         }
 
-        Rectangle {
+        Rectangle { // розділяємо карти ддля кращої візуалазації
             width: 3
             height: parent.height
             color: "#7D7A7A"
-
         }
 
         ItemMap2 {
             id: itemMap2
         }
     }
+
+
+    Popup {
+        id: settingsDialog
+        modal: true
+        width: 450
+        height: 500
+        closePolicy: Popup.NoAutoClose
+        anchors.centerIn: parent
+        background: Rectangle {
+            color: "#5E5E5E"
+        }
+
+        Rectangle {
+            id: rectBackground
+            anchors.fill: parent
+            radius: 10
+            color: "#A6A1A1"
+            opacity: 0.7
+            border.width: 2
+            border.color:"gray"
+        }
+        Rectangle {
+            id: recDialog
+            anchors.fill: parent
+            radius: 10
+            color: "#5E5E5E"
+            border.width: 2
+            border.color: "gray"
+        }
+        Row {
+            id: rowButt
+            anchors.bottomMargin:   10
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 10
+            anchors.bottom: parent.bottom
+
+            CustomButton {
+                id: buttonSave
+                textButton: "Відкрити"
+                onPressCustomButton: {
+
+                }
+            }
+
+            CustomButton {
+                id: buttonCancel
+                textButton: "Відмінити"
+                onPressCustomButton: {
+                    settingsDialog.close()
+                }
+            }
+        }
+    }
+
     //        Window {
     //            id: resultsWindow
     //            title: "Результати"
@@ -333,70 +387,70 @@ Window { // варіант де результат передається по �
     //            }
     //        }
 
-    Window {
-        id:test
-        title: "Test"
-        visible: true
-        width: 500
-        height: mainWindow.height
-        x: mainWindow.x + mainWindow.width  // Зміщуємо вікно справа від основного вікна
-        y: mainWindow.y  // Встановлюємо вікно на ту ж саму горизонтальну лінію, що і основне вікно
-        ListView {
-            id: listView
-            anchors.fill: parent
-            model: sessionModel
-            header: Item {
-                width: listView.width
-                height: 50
-                Column {
-                    spacing: 5
-                    Row {
-                        spacing: 10
-                        Text { text: "ID" ;    width: 50 }
-                        Rectangle {height: 40; width: 2; color: "black"}
+//    Window {
+//        id:test
+//        title: "Test"
+//        visible: true
+//        width: 500
+//        height: mainWindow.height
+//        x: mainWindow.x + mainWindow.width  // Зміщуємо вікно справа від основного вікна
+//        y: mainWindow.y  // Встановлюємо вікно на ту ж саму горизонтальну лінію, що і основне вікно
+//        ListView {
+//            id: listView
+//            anchors.fill: parent
+//            model: sessionModel
+//            header: Item {
+//                width: listView.width
+//                height: 50
+//                Column {
+//                    spacing: 5
+//                    Row {
+//                        spacing: 10
+//                        Text { text: "ID" ;    width: 50 }
+//                        Rectangle {height: 40; width: 2; color: "black"}
 
-                        Text { text:  "Data";width: 100 }
-                        Rectangle {height: parent.height; width: 2; color: "black"}
+//                        Text { text:  "Data";width: 100 }
+//                        Rectangle {height: parent.height; width: 2; color: "black"}
 
-                        Text { text: "Назва таблиці"  ; width: 200}
-                        Rectangle {height: parent.height; width: 2; color: "black"}
+//                        Text { text: "Назва таблиці"  ; width: 200}
+//                        Rectangle {height: parent.height; width: 2; color: "black"}
 
-                        Text { text:   "Назва сесії" ; width: 200 }
-                        Rectangle {height: parent.height; width: 2; color: "black"}
+//                        Text { text:   "Назва сесії" ; width: 200 }
+//                        Rectangle {height: parent.height; width: 2; color: "black"}
 
-                        Text { text:  "Нотатки"; width: 500 }
-                        Rectangle {height: parent.height; width: 2; color: "black"}
+//                        Text { text:  "Нотатки"; width: 500 }
+//                        Rectangle {height: parent.height; width: 2; color: "black"}
 
-                    }
-                    Rectangle {width: parent.width; height: 2; color: "black"}
+//                    }
+//                    Rectangle {width: parent.width; height: 2; color: "black"}
 
-                }
-            }
-            delegate: Item {
-                width: listView.width
-                height: 50
-                Column {
-                    spacing: 5
-                    Row {
-                        spacing: 10
+//                }
+//            }
+//            delegate: Item {
+//                width: listView.width
+//                height: 50
+//                Column {
+//                    spacing: 5
+//                    Row {
+//                        spacing: 10
 
-                        Text { text: model.id  ;  width: 50 }
-                        Rectangle {height: 40; width: 2; color: "black"}
-                        Text { text:  model.date; width: 100}
-                        Rectangle {height: parent.height; width: 2; color: "black"}
-                        Text { text: model.tableName  ; width: 200}
-                        Rectangle {height: parent.height; width: 2; color: "black"}
-                        Text { text:   model.sessionName ; width: 200 }
-                        Rectangle {height: parent.height; width: 2; color: "black"}
-                        Text { text:  model.notes; width: 500 }
-                        Rectangle {height: parent.height; width: 2; color: "black"}
+//                        Text { text: model.id  ;  width: 50 }
+//                        Rectangle {height: 40; width: 2; color: "black"}
+//                        Text { text:  model.date; width: 100}
+//                        Rectangle {height: parent.height; width: 2; color: "black"}
+//                        Text { text: model.tableName  ; width: 200}
+//                        Rectangle {height: parent.height; width: 2; color: "black"}
+//                        Text { text:   model.sessionName ; width: 200 }
+//                        Rectangle {height: parent.height; width: 2; color: "black"}
+//                        Text { text:  model.notes; width: 500 }
+//                        Rectangle {height: parent.height; width: 2; color: "black"}
 
-                    }
+//                    }
 
-                    Rectangle {width: parent.width; height: 2; color: "black"}
-                }
-            }
-        }
-    }
+//                    Rectangle {width: parent.width; height: 2; color: "black"}
+//                }
+//            }
+//        }
+//    }
 }
 
