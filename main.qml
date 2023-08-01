@@ -167,44 +167,44 @@ Window { // варіант де результат передається по �
                     anchors.right: parent.right
                     anchors.rightMargin: 5
                     z:1
-                Item {
-                    id: icon3
-                    width: parent.width - 10
-                    height: parent.height - 10
-                    anchors.centerIn: parent
-                    property string  source: "qrc:/icon/layers.svg"
-
-                    Image {
-                        id: imageMapButton3
-                        source: icon3.source
-                        sourceSize.width: parent.width
-                        sourceSize.height: parent.height
+                    Item {
+                        id: icon3
+                        width: parent.width - 10
+                        height: parent.height - 10
                         anchors.centerIn: parent
+                        property string  source: "qrc:/icon/layers.svg"
 
-                    }
-                    ColorOverlay {
-                        anchors.fill: imageMapButton3
-                        source: imageMapButton3
-                        color:   "lightblue"
-                    }
-                }
+                        Image {
+                            id: imageMapButton3
+                            source: icon3.source
+                            sourceSize.width: parent.width
+                            sourceSize.height: parent.height
+                            anchors.centerIn: parent
 
-                MouseArea {
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    acceptedButtons: Qt.LeftButton | Qt.RightButton
-                    onPressed: {
-                        if (mouse.button === Qt.LeftButton) {
-                            if (mapStyle1 === 0) mapStyle1 = 11
-                            else mapStyle1 --
                         }
-                        else if (mouse.button === Qt.RightButton) {
-                            if (mapStyle1 === 11) mapStyle1 = 0
-                            else mapStyle1 ++
+                        ColorOverlay {
+                            anchors.fill: imageMapButton3
+                            source: imageMapButton3
+                            color:   "lightblue"
                         }
                     }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton
+                        onPressed: {
+                            if (mouse.button === Qt.LeftButton) {
+                                if (mapStyle1 === 0) mapStyle1 = 11
+                                else mapStyle1 --
+                            }
+                            else if (mouse.button === Qt.RightButton) {
+                                if (mapStyle1 === 11) mapStyle1 = 0
+                                else mapStyle1 ++
+                            }
+                        }
+                    }
                 }
-            }
                 Rectangle {
                     id: tittleRec
                     radius: 10
@@ -307,10 +307,10 @@ Window { // варіант де результат передається по �
                 // -- filter Data
                 MapQuickItem {
                     id: centralPoint
-//                    coordinate {
-//                        latitude: pointMatcher.latitudeCentalPoint();
-//                        longitude: pointMatcher.longitudeCentalPoint();
-//                    }
+                    //                    coordinate {
+                    //                        latitude: pointMatcher.latitudeCentalPoint();
+                    //                        longitude: pointMatcher.longitudeCentalPoint();
+                    //                    }
                     anchorPoint.x: cross.width / 2
                     anchorPoint.y: cross.height / 2
                     sourceItem: Item {
@@ -424,44 +424,44 @@ Window { // варіант де результат передається по �
                     anchors.left: parent.left
                     anchors.leftMargin: 5
                     z:1
-                Item {
-                    id: icon
-                    width: parent.width - 10
-                    height: parent.height - 10
-                    anchors.centerIn: parent
-                    property string  source: "qrc:/icon/layers.svg"
-
-                    Image {
-                        id: imageMapButton
-                        source: icon.source
-                        sourceSize.width: parent.width
-                        sourceSize.height: parent.height
+                    Item {
+                        id: icon
+                        width: parent.width - 10
+                        height: parent.height - 10
                         anchors.centerIn: parent
+                        property string  source: "qrc:/icon/layers.svg"
 
-                    }
-                    ColorOverlay {
-                        anchors.fill: imageMapButton
-                        source: imageMapButton
-                        color:   "lightblue"
-                    }
-                }
+                        Image {
+                            id: imageMapButton
+                            source: icon.source
+                            sourceSize.width: parent.width
+                            sourceSize.height: parent.height
+                            anchors.centerIn: parent
 
-                MouseArea {
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    acceptedButtons: Qt.LeftButton | Qt.RightButton
-                    onPressed: {
-                        if (mouse.button === Qt.LeftButton) {
-                            if (mapStyle2 === 0) mapStyle2 = 11
-                            else mapStyle2 --
                         }
-                        else if (mouse.button === Qt.RightButton) {
-                            if (mapStyle2 === 11) mapStyle2 = 0
-                            else mapStyle2 ++
+                        ColorOverlay {
+                            anchors.fill: imageMapButton
+                            source: imageMapButton
+                            color:   "lightblue"
                         }
                     }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton
+                        onPressed: {
+                            if (mouse.button === Qt.LeftButton) {
+                                if (mapStyle2 === 0) mapStyle2 = 11
+                                else mapStyle2 --
+                            }
+                            else if (mouse.button === Qt.RightButton) {
+                                if (mapStyle2 === 11) mapStyle2 = 0
+                                else mapStyle2 ++
+                            }
+                        }
+                    }
                 }
-            }
 
                 MouseArea {
                     id:mapMouseCandidate
@@ -499,95 +499,13 @@ Window { // варіант де результат передається по �
                     }
 
                 }
-                MapItemView {
-                    model: dataPointsModel
-                    delegate: MapQuickItem {
-                        coordinate: pointToGeoCoordinate(modelData)
-                        anchorPoint.x: recImgD.width * 0.5
-                        anchorPoint.y: recImgD.height * 0.5
 
-                        sourceItem: Item {
-                            width: 22
-                            height: 22
-                            Rectangle {
-                                id: recImgD
-                                width: parent.width
-                                height: parent.height
-                                color: "lightblue"
-                                border.width: 2
-                                border.color: "black"
-                                radius: parent.width
-                                Rectangle {
-                                    id: recImg2D
-                                    width: 12
-                                    height: 12
-                                    radius: 12
-                                    color: "white"
-                                    anchors.centerIn: parent
-                                    border.width: 2
-                                    border.color: "black"
-                                }
-                            }
-                            Text {
-                                text:index
-                                font.pixelSize: 12
-                                anchors.top: recImgD.bottom
-                                anchors.horizontalCenter: parent.horizontalCenter
-                            }
-                        }
-                        MouseArea {
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            drag.target: parent
-                            acceptedButtons: Qt.RightButton | Qt.LeftButton
-                            Menu {
-                                id: contextMenu2
-                                Action {
-                                    text: "Видалити точку"
-                                    onTriggered: {
-                                        bestMatchingPointsModel.clear();
-                                        previousPointsModel.clear();
-                                        removeCandidatePointModel(model.index);
-                                        pointMatcher.removeCandidatePoint(model.index);
-                                        dataPointsModel = pointMatcher.getCandidatePoints();
-                                    }
-                                }
-                            }
-
-                            onPressed: {
-                                if (mouse.button == Qt.RightButton) {
-                                    contextMenu2.popup()
-                                }
-                            }
-
-                            onReleased:  {
-                                if (mouse.button == Qt.LeftButton) {
-                                    var newCordinate = parent.coordinate
-                                    editCandidatePointsModel (model.index, newCordinate.latitude, newCordinate.longitude );
-                                    pointMatcher.updateCandidatePoint(model.index, newCordinate.latitude, newCordinate.longitude);
-                                    bestMatchingPointsModel.clear();
-                                    previousPointsModel.clear();
-                                    dataPointsModel = pointMatcher.getCandidatePoints();
-                                }
-                            }
-                        }
-                    }
+                DataPointsCandidate {
+                    id: dataPointsCandidate
                 }
 
-                MapItemView {
-                    model: bestMatchingPointsModel
-                    delegate: MapQuickItem {
-                        coordinate: pointToGeoCoordinate(model.cand_point)
-                        anchorPoint.x: matchedMarkerImage2.width * 0.5
-                        anchorPoint.y: matchedMarkerImage2.height * 0.5
-
-                        sourceItem: Image {
-                            id: matchedMarkerImage2
-                            source: "qrc:/icon/cross.svg"
-                            width: 12
-                            height: 12
-                        }
-                    }
+                BestMatchingPointsMapView {
+                    id: bestMatchingPointsMapView
                 }
 
                 MapItemView {
@@ -606,60 +524,95 @@ Window { // варіант де результат передається по �
                         coordinate: pointToGeoCoordinate(model.point)
                     }
                 }
-                MapItemView {
-                    model: bestMatchingPointsModel
-                    delegate: MapPolyline {
-                        line.width: 1
-                        line.color: "red"
-                        smooth: true
-                        path: [
-                            pointToGeoCoordinate(model.ref_point),
-                            pointToGeoCoordinate(model.cand_point)
-                        ]
-                    }
+                BestMatchingPointsViewMap {
+                    id: bestMatchingPointsViewMap
                 }
             }
         }
     }
-//        Window {
-//            id: resultsWindow
-//            title: "Результати"
-//            visible: true
-//            width: 400
-//            height: 500
+    //        Window {
+    //            id: resultsWindow
+    //            title: "Результати"
+    //            visible: true
+    //            width: 400
+    //            height: 500
 
-//            ListView {
-//                anchors.fill: parent
-//                model: bestMatchingPointsModel
-//                delegate: Text {
-//                    text: "Index: " + index +
-//                       "\nReference Point index: " + model.ref_point.idx +   " Reference Point: " + model.ref_point.lat + ", " + model.ref_point.lon +
-//                       "\nCandidate Point index: " + model.cand_point.idx +  " Candidate Point: " + model.cand_point.lat + ", " + model.cand_point.lon +
-//                       "\nMatched: " + (model.matched ? "Yes" : "No")
-//                    font.pixelSize: 16
-//                }
-//            }
-//        }
+    //            ListView {
+    //                anchors.fill: parent
+    //                model: bestMatchingPointsModel
+    //                delegate: Text {
+    //                    text: "Index: " + index +
+    //                       "\nReference Point index: " + model.ref_point.idx +   " Reference Point: " + model.ref_point.lat + ", " + model.ref_point.lon +
+    //                       "\nCandidate Point index: " + model.cand_point.idx +  " Candidate Point: " + model.cand_point.lat + ", " + model.cand_point.lon +
+    //                       "\nMatched: " + (model.matched ? "Yes" : "No")
+    //                    font.pixelSize: 16
+    //                }
+    //            }
+    //        }
 
     Window {
         id:test
         title: "Test"
         visible: true
-        width: 400
-        height: 400
+        width: 1150
+        height: mainWindow.height
+//        width: Screen.width - mainWindow.width  // Займаємо весь вільний простір по ширині
+//         height: Screen.height  // Займаємо весь простір по висоті
+        x: mainWindow.x + mainWindow.width  // Зміщуємо вікно справа від основного вікна
+          y: mainWindow.y  // Встановлюємо вікно на ту ж саму горизонтальну лінію, що і основне вікно
         ListView {
             id: listView
             anchors.fill: parent
             model: sessionModel
+            header: Item {
+                width: listView.width
+                height: 50
+                Column {
+                    spacing: 5
+                    Row {
+                        spacing: 10
+                        Text { text: "ID" ;    width: 50 }
+                        Rectangle {height: 40; width: 2; color: "black"}
 
+                        Text { text:  "Data";width: 100 }
+                        Rectangle {height: parent.height; width: 2; color: "black"}
+
+                        Text { text: "Назва таблиці"  ; width: 200}
+                        Rectangle {height: parent.height; width: 2; color: "black"}
+
+                        Text { text:   "Назва сесії" ; width: 200 }
+                        Rectangle {height: parent.height; width: 2; color: "black"}
+
+                        Text { text:  "Нотатки"; width: 500 }
+                        Rectangle {height: parent.height; width: 2; color: "black"}
+
+                    }
+                    Rectangle {width: parent.width; height: 2; color: "black"}
+
+                }
+            }
             delegate: Item {
                 width: listView.width
                 height: 50
-                Row {
-                    Text { text: model.id; width: 100 }
-                    Text { text: model.date; width: 200 }
-                    Text { text: model.tableName; width: 300 }
-                    // Add other columns as needed...
+                Column {
+                    spacing: 5
+                    Row {
+                        spacing: 10
+
+                        Text { text: model.id  ;  width: 50 }
+                        Rectangle {height: 40; width: 2; color: "black"}
+                        Text { text:  model.date; width: 100}
+                        Rectangle {height: parent.height; width: 2; color: "black"}
+                        Text { text: model.tableName  ; width: 200}
+                        Rectangle {height: parent.height; width: 2; color: "black"}
+                        Text { text:   model.sessionName ; width: 200 }
+                        Rectangle {height: parent.height; width: 2; color: "black"}
+                        Text { text:  model.notes; width: 500 }
+                        Rectangle {height: parent.height; width: 2; color: "black"}
+
+                    }
+
+                    Rectangle {width: parent.width; height: 2; color: "black"}
                 }
             }
         }
