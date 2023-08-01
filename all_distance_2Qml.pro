@@ -7,7 +7,6 @@ QT += quick location sql
 
 SOURCES += \
         datafromdb.cpp \
-        filteringclass.cpp \
         main.cpp \
         pointmatcher.cpp
 
@@ -28,5 +27,4 @@ HEADERS += \
     StructData.h \
     aimuth_Vinc.h \
     datafromdb.h \
-    filteringclass.h \
     pointmatcher.h
