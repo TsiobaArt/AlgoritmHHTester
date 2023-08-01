@@ -27,6 +27,7 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
     QHash<int, QByteArray> roleNames() const;
     Q_INVOKABLE void updateModel();
+    Q_INVOKABLE QJsonObject get(const int index);
 
 private:
 

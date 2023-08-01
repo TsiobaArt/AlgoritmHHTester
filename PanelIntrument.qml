@@ -158,14 +158,26 @@ Item {
                                 anchors.horizontalCenter:   parent.horizontalCenter
                                 opacity: 1
                             }
-                            ComboBox {
-                                       id: myComboBox
-                                       width: 200
-                                       model: ["session_14_06_07_33", "session_14_06_07_36"]
-//                                       model: ["session_25_07_10_23_41", "session_26_07_13_23_36", "session_26_07_13_49_24"]
+//                            ComboBox {
+//                                       id: myComboBox
+//                                       width: 200
+////                                       model: ["session_14_06_07_33", "session_14_06_07_36"]
+//                                       model:sessionModel
 
-                                       currentIndex: 0 // No selection by default
-                                   }
+////                                        model: sessionModel
+////                                        displayText:  model.tableName
+
+//                                       currentIndex: 0 // No selection by default
+//                                   }
+                            ComboBox {
+                                id: myComboBox
+                                width: 200
+                                model: sessionModel
+                                textRole: "tableName" // ви можете замінити "tableName" на ім'я поля, яке ви хочете відображати
+                                currentIndex: 0
+
+                            }
+
                             Row {
                                 spacing: 5
                                 anchors.horizontalCenter: parent.horizontalCenter
@@ -183,7 +195,6 @@ Item {
                                     id: pointRcs
                                     placeholderText: "Rcs"
                                     inputMethodHints: Qt.ImhDigitsOnly // Дозволяє вводити тільки цифри
-//                                    validator: RegExpValidator { regExp: /^(0?[1-9]|1[0-9]|20)$/ }
                                     width: 110
 
                                 }
@@ -206,7 +217,6 @@ Item {
                                     id: poinSignalStrength
                                     placeholderText: "SignalStrength"
                                     inputMethodHints: Qt.ImhDigitsOnly // Дозволяє вводити тільки цифри
-//                                    validator: RegExpValidator { regExp: /^(0?[1-9]|1[0-9]|20)$/ }
                                     width: 110
 
                                 }
@@ -240,7 +250,6 @@ Item {
                             Button {
                                 text: "Відмінити"
                                 onClicked: {
-                                    // Дії при натисканні кнопки Відмінити
                                     dataBaseDialog.reject()
                                 }
                             }
@@ -314,7 +323,6 @@ Item {
                                             id: postProcessingRcs
                                             placeholderText: "Rcs"
                                             inputMethodHints: Qt.ImhDigitsOnly // Дозволяє вводити тільки цифри
-        //                                    validator: RegExpValidator { regExp: /^(0?[1-9]|1[0-9]|20)$/ }
                                             width: 110
 
                                         }
@@ -336,8 +344,6 @@ Item {
                                             id: postProcessingDistance
                                             placeholderText: "Distance"
                                             inputMethodHints: Qt.ImhDigitsOnly // Дозволяє вводити тільки цифри
-
-        //                                    validator: RegExpValidator { regExp: /^(0?[1-9]|1[0-9]|20)$/ }
                                             width: 110
 
                                         }
@@ -360,8 +366,6 @@ Item {
                                             id: postProcessingAzimuthBearing
                                             placeholderText: "AzimuthBearing"
                                             inputMethodHints: Qt.ImhDigitsOnly // Дозволяє вводити тільки цифри
-
-        //                                    validator: RegExpValidator { regExp: /^(0?[1-9]|1[0-9]|20)$/ }
                                             width: 110
 
                                         }
@@ -402,241 +406,10 @@ Item {
                                 }
                             }
                         }
-            Rectangle {
-                id: genereTest
-                width: parent.width - 20
-                anchors.horizontalCenter: parent.horizontalCenter
-                height: 40
-                radius: 10
-                color: parent.parent.color
-                border.width: 2
-                border.color:  "white"
-                Text {
-                    id: text1
-                    text: qsTr("Випаковий тест")
-                    anchors.centerIn: parent
-                    color: "white"
-                    font.pixelSize: 16
 
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    hoverEnabled: true
-
-                    onEntered: {
-                        genereTest.border.color = "lightblue" // Зміна кольору обводки при наведенні
-                    }
-
-                    onExited: {
-                        genereTest.border.color = "white" // Повернення початкового кольору обводки
-                    }
-
-                    onPressed: {
-                        genereTest.scale = 0.9 // Зменшення масштабу при натисканні
-
-                    }
-
-                    onReleased: {
-                        genereTest.scale = 1 // Повернення початкового масштабу при відпусканні
-                        settingsDialog.open()
-                    }
-                }
-
-                Dialog {
-                    id: settingsDialog
-                    title: "Налаштування тесту"
-                    modal: Qt.WindowModal
-                    leftMargin: mainWindow.width/2 - settingsDialog.width/2
-                    bottomMargin: mainWindow.height/2 - settingsDialog.height/2
-                    Column {
-                        spacing: 10
-
-                        Column {
-                            spacing: 10
-                            Text {
-                                id: countText
-                                text: "Кількість наборів точок"
-                                font.bold: true
-                                font.pixelSize: 12
-                                color:"grey"
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                opacity: 1
-                            }
-
-                            Row {
-                                spacing: 5
-                                anchors.horizontalCenter: parent.horizontalCenter
-
-                                TextField {
-                                    id: pointsReference
-                                    placeholderText: "Еталони"
-                                    inputMethodHints: Qt.ImhDigitsOnly // Дозволяє вводити тільки цифри
-                                    validator: RegExpValidator { regExp: /^(0?[1-9]|1[0-9]|20)$/ }
-                                    width: 110
-
-                                }
-                                TextField {
-                                    id: pointsCandidate
-                                    placeholderText: "Кандидати"
-                                    inputMethodHints: Qt.ImhDigitsOnly // Дозволяє вводити тільки цифри
-                                    //                                    validator: RegExpValidator { regExp: /^([1-9][0-9]{0,2}|1000)$/ }
-                                    width: 110
-                                }
-                            }
+                        GenereTestRandom {
+                            id: genereTest
                         }
-                        Column {
-                            spacing: 10
-                            Text {
-                                id: countShifttext
-                                text: "Кількість схожих сузір'їв"
-                                font.bold: true
-                                font.pixelSize: 12
-                                color:"grey"
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                opacity: 1
-                            }
-                            TextField {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                id: shiftedPoints
-                                width: 225
-                                placeholderText: "Кількість"
-                                inputMethodHints: Qt.ImhDigitsOnly // Дозволяє вводити тільки цифри
-                                validator: RegExpValidator { regExp: /^([1-9]|1[0-5])$/ }
-                            }
-                        }
-                        Column {
-                            spacing: 10
-                            Text {
-                                id: countShiftRange
-                                text: "Розсіювання схожих сузір'їв"
-                                font.bold: true
-                                font.pixelSize: 12
-                                color:"grey"
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                opacity: 1
-                            }
-                            TextField {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                id: shiftedPointsRange
-                                width: 225
-                                placeholderText: "Градуси"
-                                inputMethodHints: Qt.ImhDigitsOnly // Дозволяє вводити тільки цифри
-                                validator: RegExpValidator { regExp: /^[0-0]\.\d{1,4}$/ }
-                            }
-                        }
-                        Column {
-                            spacing: 10
-                            Text {
-                                id: deltalat
-                                text: "Діапазон широти"
-                                font.bold: true
-                                font.pixelSize: 12
-                                color:"grey"
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                opacity: 1
-                            }
-                            Row {
-                                spacing: 5
-                                anchors.horizontalCenter: parent.horizontalCenter
-
-                                TextField {
-                                    id: minLat
-                                    placeholderText: "Мін широта "
-                                    validator:  RegExpValidator { regExp: /^-?([0-8][0-9]?|90?)\.[0-9]{0,7}/ }
-                                    inputMethodHints: Qt.ImhDigitsOnly // Дозволяє вводити тільки цифри
-                                    width: 110
-                                }
-                                TextField {
-                                    id: maxLat
-                                    placeholderText: "Макс широта "
-                                    validator:  RegExpValidator { regExp: /^-?([0-8][0-9]?|90?)\.[0-9]{0,7}/ }
-                                    inputMethodHints: Qt.ImhDigitsOnly // Дозволяє вводити тільки цифри
-                                    width: 110
-                                }
-                            }
-                            Text {
-                                id: deltaLon
-                                text: "Діапазон Довготи"
-                                font.bold: true
-                                font.pixelSize: 12
-                                color:"grey"
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                opacity: 1
-                            }
-                            Row {
-                                spacing: 5
-                                anchors.horizontalCenter: parent.horizontalCenter
-
-                                TextField {
-                                    id: minLon
-                                    placeholderText: "Мін довгота "
-                                    validator:  RegExpValidator { regExp: /^-?([0-8][0-9]?|90?)\.[0-9]{0,7}/ }
-                                    inputMethodHints: Qt.ImhDigitsOnly // Дозволяє вводити тільки цифри
-                                    width: 110
-                                }
-                                TextField {
-                                    id: maxLon
-                                    placeholderText: "Макс довгота "
-                                    validator:  RegExpValidator { regExp: /^-?([0-8][0-9]?|90?)\.[0-9]{0,7}/ }
-                                    inputMethodHints: Qt.ImhDigitsOnly // Дозволяє вводити тільки цифри
-                                    width: 110
-                                }
-
-                            }
-                        }
-                        Button {
-                            text: "Cтандартні налаштування"
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            width: 180
-                            onClicked: {
-                                pointsReference.text = panelIntrument.countReferencePoint.toString()
-                                pointsCandidate.text = panelIntrument.countCandidatePoint.toString()
-                                shiftedPoints.text   = panelIntrument.countShiftedPoint.toString()
-                                minLat.text          = panelIntrument.minLatFilteCandidate.toString()
-                                maxLat.text          = panelIntrument.maxLatFilteCandidate.toString()
-                                minLon.text          = panelIntrument.minLonFilteCandidate.toString()
-                                maxLon.text          = panelIntrument.maxLonFilteCandidate.toString()
-                                shiftedPointsRange.text = 0.001
-                            }
-                        }
-                        Row {
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            spacing: 5
-
-                            Button {
-                                text: "Підтвердити"
-                                onClicked: {
-                                    // Дії при натисканні кнопки Підтвердити
-                                    settingsDialog.accept()
-                                }
-                            }
-
-                            Button {
-                                text: "Відмінити"
-                                onClicked: {
-                                    // Дії при натисканні кнопки Відмінити
-                                    settingsDialog.reject()
-                                }
-                            }
-                        }
-                    }
-
-                    onAccepted: {
-                        referencePointsModel = []
-                        dataPointsModel = []
-                        bestMatchingPointsModel.clear()
-                        previousPointsModel.clear()
-
-                        pointMatcher.downloadRandomTest(parseInt(shiftedPoints.text), parseInt(pointsReference.text), parseInt(pointsCandidate.text), parseFloat(minLat.text), parseFloat(maxLat.text), parseFloat(minLon.text), parseFloat(maxLon.text), parseFloat(shiftedPointsRange.text))
-                        console.log("Кількість точок: " + pointsCandidate.text)
-                        referencePointsModel = pointMatcher.getReferencePoints()
-                        dataPointsModel      = pointMatcher.getCandidatePoints()
-                    }
-                    onRejected: {
-                        // Тут ви можете виконати дії при відхиленні діалогу (наприклад, очистити поля вводу)
-                    }
-                }
-            }
 
 
             Rectangle {
@@ -766,8 +539,8 @@ Item {
                     title: "Налаштування обчислення"
                     modal: Qt.WindowModal
                     topPadding: 0
-                    leftMargin:  mainWindow.width/2 - settingsDialog.width/2
-                    bottomMargin:   mainWindow.height/2 - settingsDialog.height/2
+                    leftMargin:  mainWindow.width/2 - genereTest.settingsDialog.width/2
+                    bottomMargin:   mainWindow.height/2 - genereTest.settingsDialog.height/2
 
                     Column {
                         spacing: 10
@@ -834,7 +607,6 @@ Item {
                         }
                         Column {
                             spacing: 5
-                            //                                anchors.verticalCenter:  parent.verticalCenter
 
                             RadioButton {
                                 id: bestMatches
@@ -878,7 +650,6 @@ Item {
                                     centralPoint.coordinate.latitude = pointMatcher.latitudeCentalPoint();
                                     centralPoint.coordinate.longitude = pointMatcher.longitudeCentalPoint();
                                     console.log ( "centralPoint.coordinate.latitude " + centralPoint.coordinate.latitude)
-
                                 }
                             }
 

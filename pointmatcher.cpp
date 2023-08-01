@@ -8,7 +8,7 @@ bool operator<(const Match &m1, const Match &m2) {
 
 PointMatcher::PointMatcher(QObject *parent) : QObject(parent)
 {
-    dataFromDB  =   new DataFromDB(this);
+//    dataFromDB  =   new DataFromDB(this);
 //    dataFromDB->loadData("session_14_06_07_33",10,10);
 //    for (const Point& point : dataFromDB->getCoordinates()) {
 //          qDebug() << "Latitude:" << point.lat << "Longitude:" << point.lon;
@@ -281,7 +281,7 @@ double PointMatcher::latitudeCentalPoint() const
 
 void PointMatcher::_findLocation(const std::vector<Match>& qmlMatches)
 {
-   _allDataDb = dataFromDB->getAllData();
+//   _allDataDb = dataFromDB->getAllData();
    std::vector<Point> candidate;
    std::set<int> uniqueIndexCandidate;
 
@@ -311,8 +311,8 @@ void PointMatcher::_findLocation(const std::vector<Match>& qmlMatches)
           }
       }
 
-      _allDataDb = filteredDataDb;
-      findMyLocation();
+//      _allDataDb = filteredDataDb;
+//      findMyLocation();
 
 }
 

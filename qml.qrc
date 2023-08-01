@@ -8,5 +8,6 @@
         <file>PanelIntrument.qml</file>
         <file>InfoRecMarker.qml</file>
         <file>icon/layers.svg</file>
+        <file>GenereTestRandom.qml</file>
     </qresource>
 </RCC>

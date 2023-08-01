@@ -41,3 +41,16 @@ QVariant SessionModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
+QJsonObject SessionModel::get(const int index)
+{
+    QJsonObject obj;
+    QSqlRecord record = this->record(index);
+
+    if (record.isEmpty()) return obj;
+
+    for (auto i = 0; i < record.count(); i++)
+    {
+        obj[record.fieldName(i)] = record.value(i).toJsonValue();
+    }
+    return obj;
+}

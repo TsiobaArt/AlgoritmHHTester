@@ -6,6 +6,7 @@ QT += quick location sql
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        database.cpp \
         datafromdb.cpp \
         main.cpp \
         pointmatcher.cpp \
@@ -27,6 +28,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     StructData.h \
     aimuth_Vinc.h \
+    database.h \
     datafromdb.h \
     names.h \
     pointmatcher.h \
