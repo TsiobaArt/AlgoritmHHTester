@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>icon/circle.svg</file>
+        <file>icon/cross.svg</file>
+        <file>icon/marker1.svg</file>
+        <file>icon/target.svg</file>
+        <file>PanelIntrument.qml</file>
+        <file>InfoRecMarker.qml</file>
+        <file>icon/layers.svg</file>
+    </qresource>
+</RCC>
