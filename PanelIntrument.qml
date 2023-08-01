@@ -349,7 +349,7 @@ Item {
                 color: parent.parent.color
                 border.width: 2
                 border.color:  "white"
-                Text {centralPoint
+                Text {
                     id: textcalculate
                     text: qsTr("Розрахувати")
                     anchors.centerIn: parent

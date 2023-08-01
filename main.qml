@@ -75,7 +75,7 @@ Window { // варіант де результат передається по �
                                                    lon: dataPointsModel[match.cand_idx2].lon,
                                                    idx: match.cand_idx2
                                                },
-                                               matched: true
+                                               matched: trues
                                            });
         }
     }
@@ -231,77 +231,8 @@ Window { // варіант де результат передається по �
 
                 }
 
-                MapItemView {
-                    model: referencePointsModel
-                    delegate: MapQuickItem {
-                        coordinate: pointToGeoCoordinate(modelData)
-                        anchorPoint.x: recImg.width * 0.5
-                        anchorPoint.y: recImg.height * 0.5
-                        sourceItem: Item {
-                            width: 22
-                            height: 22
-                            Rectangle {
-                                id: recImg
-                                width: parent.width
-                                height: parent.height
-                                color: "lightblue"
-                                border.width: 2
-                                border.color: "black"
-                                radius: parent.width
-                                Rectangle {
-                                    id: recImg2
-                                    width: 12
-                                    height: 12
-                                    radius: 12
-                                    color: "white"
-                                    anchors.centerIn: parent
-                                    border.width: 2
-                                    border.color: "black"
-                                }
-                            }
-                            Text {
-                                text:index
-                                font.pixelSize: 12
-                                anchors.top: recImg.bottom
-                                anchors.horizontalCenter: parent.horizontalCenter
-                            }
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            drag.target: parent
-                            acceptedButtons: Qt.RightButton | Qt.LeftButton
-                            Menu {
-                                id: contextMenu
-                                Action {
-                                    text: "Видалити точку"
-                                    onTriggered: {
-                                        bestMatchingPointsModel.clear();
-                                        previousPointsModel.clear();
-                                        removeReferencePointModel(model.index);
-                                        pointMatcher.removeReferencePoint(model.index);
-                                        referencePointsModel = pointMatcher.getReferencePoints();
-                                    }
-                                }
-                            }
-                            onPressed: {
-                                if (mouse.button == Qt.RightButton) {
-                                    contextMenu.popup()
-                                }
-                            }
-                            onReleased:  {
-                                if (mouse.button == Qt.LeftButton) {
-                                    var newCordinate = parent.coordinate
-                                    editReferencePointsModel (model.index, newCordinate.latitude, newCordinate.longitude );
-                                    pointMatcher.updateReferencePoint(model.index, newCordinate.latitude, newCordinate.longitude);
-                                    bestMatchingPointsModel.clear();
-                                    previousPointsModel.clear();
-                                    referencePointsModel = pointMatcher.getReferencePoints();
-                                }
-                            }
-                        }
-                    }
+                ReferencePointsItemView {
+                    id: referencePointsItemView
                 }
 
                 // -- filter Data
@@ -331,27 +262,15 @@ Window { // варіант де результат передається по �
                 }
                 // -- filter Data
 
-                MapItemView {
-                    model: bestMatchingPointsModel
-                    delegate: MapQuickItem {
-                        coordinate: pointToGeoCoordinate(model.ref_point)
-                        anchorPoint.x: matchedMarkerImage.width * 0.5
-                        anchorPoint.y: matchedMarkerImage.height * 0.5
-
-                        sourceItem: Image {
-                            id: matchedMarkerImage
-                            source: "qrc:/icon/cross.svg"
-                            width: 10
-                            height: 10
-                        }
-                    }
+                BestMatchingPoints {
+                    id: bestMatchingPoints
                 }
 
                 PreviousPointsItemView {
                     id: previousPointsItemView
                 }
                 BestMatchingPointsItemView {
-                    id: bestMatchingPointsItemView
+                    id: bestMatchingPointsItemViewLine
                 }
             }
             PanelIntrument {

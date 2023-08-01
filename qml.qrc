@@ -16,5 +16,7 @@
         <file>ItemMap2.qml</file>
         <file>PreviousPointsItemView.qml</file>
         <file>BestMatchingPointsItemView.qml</file>
+        <file>BestMatchingPoints.qml</file>
+        <file>ReferencePointsItemView.qml</file>
     </qresource>
 </RCC>

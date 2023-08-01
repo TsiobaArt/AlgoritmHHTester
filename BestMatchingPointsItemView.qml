@@ -8,7 +8,7 @@ import QtGraphicalEffects 1.0
 
 ///////////////////////////////////////////////////////////////////////////////////
 MapItemView {
-    id:  bestMatchingPointsItemView
+    id:  bestMatchingPointsItemViewLine
     model: bestMatchingPointsModel
     delegate: MapPolyline {
         line.width: 1

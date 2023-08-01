@@ -86,7 +86,7 @@ void DataFromDB::processingData(const double rcs, const double distance, const d
     m_coordinates.clear();
     qDebug() << "distance " << distance;
     std::vector<std::vector<StructData>> clusters;
-    std::sort(_allDataDb.begin(), _allDataDb.end(), [](const StructData& a, const StructData& b) {
+    std::sort(_allDataDb.begin(), _allDataDb.end(), [](const StructData& a, const StructData& b) { // сортування від меншого до більшого
           return a.Distance < b.Distance;
       });
 //    for (const auto& data : _allDataDb) {
