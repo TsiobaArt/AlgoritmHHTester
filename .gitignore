@@ -10,7 +10,7 @@
 *.dll
 *.dylib
 headDB.db
-
+headDBNew.db
 # Qt-es
 object_script.*.Release
 object_script.*.Debug
