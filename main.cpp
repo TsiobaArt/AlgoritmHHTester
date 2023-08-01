@@ -9,6 +9,7 @@
 #include "datafromdb.h"
 #include "database.h"
 #include "sessionmodel.h"
+#include "referencemodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,7 +21,7 @@ int main(int argc, char *argv[])
 
     PointMatcher point_matcher;
     SessionModel *sessionModel = new SessionModel(&app);
-
+    ReferenceModel *referenceModel   = new ReferenceModel(&app);
     QQmlApplicationEngine engine;
 
     QElapsedTimer timer;
@@ -29,7 +30,7 @@ int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty("pointMatcher", &point_matcher);
     engine.rootContext()->setContextProperty("sessionModel", sessionModel);
-
+    engine.rootContext()->setContextProperty("referenceModel", referenceModel);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

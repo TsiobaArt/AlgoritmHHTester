@@ -261,6 +261,30 @@ Window { // варіант де результат передається по �
                     }
                 }
                 // -- filter Data
+                MapItemView {
+                    id: referencePointFromDb
+                    model: referenceModel
+                    delegate: MapQuickItem {
+                        coordinate: QtPositioning.coordinate(model.latitude, model.longitude)
+                        anchorPoint.x: matchedMarkerImage.width * 0.5
+                        anchorPoint.y: matchedMarkerImage.height * 0.5
+
+                        sourceItem: Image {
+                            id: matchedMarkerImage
+                            source: "qrc:/icon/cross.svg"
+                            width: 35
+                            height: 35
+
+                        }
+
+                        ColorOverlay {
+                        anchors.fill: parent
+                        source: matchedMarkerImage
+                        smooth: true
+                        color:"red"
+                        }
+                    }
+                }
 
                 BestMatchingPoints {
                     id: bestMatchingPoints

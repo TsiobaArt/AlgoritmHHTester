@@ -3,7 +3,7 @@
 ReferenceModel::ReferenceModel(QObject *parent)
     : QSqlTableModel{parent}
 {
-
+    this->updateModel();
 }
 QHash<int, QByteArray> ReferenceModel::roleNames() const
 {
