@@ -142,6 +142,7 @@ Popup {
                     settingsDialog.close()
                     panelIntrument.uploadTestDataBase.customComboBox.currentText = "Відкрити сессію"
                     listView.selectedIndex = -1
+
                 }
             }
         }

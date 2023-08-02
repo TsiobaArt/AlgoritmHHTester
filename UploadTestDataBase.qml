@@ -142,6 +142,7 @@ Rectangle {
                         width: parent.width
                         height: parent.height
                         color: "lightgrey"
+                        opacity: tickModel.count > 0 ? 1 : 0.5
                         border.width: 1
                         border.color: "black"
                         Text {
@@ -153,6 +154,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: ticDialog.open()
+                        enabled: tickModel.count > 0 ? true : false
                     }
                 }
 
@@ -215,7 +217,7 @@ Rectangle {
                         bestMatchingPointsModel.clear()
                         previousPointsModel.clear()
 
-                        pointMatcher.downloadDataBaseTest(parseInt(poinSignalStrength.text), pointRcs.text,customComboBox.currentText,panelIntrument.uploadTestDataBase.selectIdTick)
+                        pointMatcher.downloadDataBaseTest(poinSignalStrength.text, pointRcs.text,customComboBox.currentText,panelIntrument.uploadTestDataBase.selectIdTick)
                         referencePointsModel = pointMatcher.getReferencePoints()
                         dataPointsModel      = pointMatcher.getCandidatePoints()
 
