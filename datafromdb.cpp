@@ -74,16 +74,23 @@ DataFromDB::DataFromDB(QObject *parent) : QObject(parent) {
 //        }
 //    }
 //}
-void DataFromDB::loadData(const QString &table, const double rcsRange, const double signalStrengthRange) {
+void DataFromDB::loadData(const QString &table, const double rcsRange, const double signalStrengthRange, const int tickNumber) {
     // Створюємо запит до бази даних, де вибираємо дані з вказаної таблиці
     QSqlQuery query(m_db);
-    query.prepare("SELECT data FROM " + table /*+ " WHERE id == 3 "*/);
+
+
+    qDebug() << "tickNumber " << tickNumber;
+    query.prepare("SELECT data FROM " + table + " WHERE id == :tickNumber");
+    query.bindValue(":tickNumber", tickNumber);
+
 
     // Виконуємо запит. Якщо є помилка - виводимо повідомлення та завершуємо функцію
     if (!query.exec()) {
         qDebug() << "Error: could not execute query -" << query.lastError().text();
         return;
     }
+
+
 
     // Очищуємо вектори з координатами і даними перед обробкою нового запиту
     m_coordinates.clear();
@@ -109,6 +116,7 @@ void DataFromDB::loadData(const QString &table, const double rcsRange, const dou
                 // Перебираємо кожен об'єкт в масиві "list"
                 for (const QJsonValue& itemValue : qAsConst(listArray)) {
                     QJsonObject item = itemValue.toObject();
+
 
                     // Отримуємо значення полів об'єкта "list"
                     double signalStrength = item.value("SignalStrength").toDouble();
@@ -144,6 +152,34 @@ void DataFromDB::loadData(const QString &table, const double rcsRange, const dou
         }
     }
 }
+
+QVariantMap DataFromDB::readTicCountAndId(const QString &table)
+{
+    QSqlQuery query(m_db);
+
+    query.prepare("SELECT * FROM " + table);
+
+    if (!query.exec()) {
+        qDebug() << "Unable to execute query: " << query.lastError();
+        return QVariantMap();
+    }
+
+    QVariantMap result;
+
+    while (query.next()) {
+        int ticCount = query.value("ticCount").toInt();
+        int id = query.value("id").toInt();
+
+        QVariantMap item;
+        item.insert("ticCount", ticCount);
+        item.insert("id", id);
+
+        result.insert(QString::number(id), item);
+    }
+
+    return result;
+}
+
 
 std::vector<Point> DataFromDB::getCoordinates() const {
     return m_coordinates;

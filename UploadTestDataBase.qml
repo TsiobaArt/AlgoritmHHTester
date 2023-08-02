@@ -19,9 +19,16 @@ Rectangle {
     radius: 10
     border.width: 2
     border.color:  "white"
-
     property alias customComboBox: customComboBox
     property alias dataBaseDialog: dataBaseDialog
+    property alias tickModel:tickModel
+
+    property int selectIdTick: -1
+
+    ListModel {
+        id: tickModel
+    }
+
     Text {
         id: textTestDataBase
         text: qsTr("Дані Сан-Франциско")
@@ -117,34 +124,39 @@ Rectangle {
                         anchors.fill: parent
                         onClicked: settingsDialog.open()
                     }
-
-//                    Popup {
-//                        id: popup
-//                        width: mainWindow.width / 2
-//                        height:  mainWindow.height / 2
-//                        anchors.centerIn: parent
-//                        closePolicy: Popup.NoAutoClose
-
-//                        ListView {
-//                            id: listView
-//                            width: parent.width
-//                            height: parent.height
-//                            model: sessionModel
-//                            delegate: ItemDelegate {
-//                                width: listView.width
-//                                height: customComboBox.itemHeight
-//                                text: model.tableName
-//                                highlighted: ListView.isCurrentItem
-//                                onClicked: {
-//                                    customComboBox.currentIndex = index
-//                                    customComboBox.currentText = text
-//                                    customComboBox.activated(index)
-//                                    popup.close()
-//                                }
-//                            }
-//                        }
-//                    }
                 }
+
+
+                Item {
+                    id: ticItem
+                    width: 200
+                    height: 30
+                    property int currentIndex: -1
+                    property string currentText: "Обрати тік"
+                    property var model: sessionModel
+                    signal activated(int index)
+                    readonly property real itemHeight: 30  // Add this line
+
+                    Rectangle {
+                        id: ticItemRec
+                        width: parent.width
+                        height: parent.height
+                        color: "lightgrey"
+                        border.width: 1
+                        border.color: "black"
+                        Text {
+                            anchors.centerIn: parent
+                            text: ticItem.currentText
+                        }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: ticDialog.open()
+                    }
+                }
+
+
                 Row {
                     spacing: 5
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -197,19 +209,20 @@ Rectangle {
                     text: "Підтвердити"
                     onClicked: {
                         // Дії при натисканні кнопки Підтвердити
-                        console.log(customComboBox.currentText)
 
                         referencePointsModel = []
                         dataPointsModel = []
                         bestMatchingPointsModel.clear()
                         previousPointsModel.clear()
 
-                        pointMatcher.downloadDataBaseTest(0, pointRcs.text,customComboBox.currentText )
+                        pointMatcher.downloadDataBaseTest(parseInt(poinSignalStrength.text), pointRcs.text,customComboBox.currentText,panelIntrument.uploadTestDataBase.selectIdTick)
                         referencePointsModel = pointMatcher.getReferencePoints()
                         dataPointsModel      = pointMatcher.getCandidatePoints()
 
 
                         dataBaseDialog.accept()
+                        tickModel.clear()
+                        panelIntrument.uploadTestDataBase.selectIdTick = -1
                     }
                 }
 
@@ -217,6 +230,8 @@ Rectangle {
                     text: "Відмінити"
                     onClicked: {
                         dataBaseDialog.reject()
+                        tickModel.clear()
+                        panelIntrument.uploadTestDataBase.selectIdTick = -1
                     }
                 }
             }

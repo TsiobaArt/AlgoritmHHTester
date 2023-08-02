@@ -246,12 +246,24 @@ void PointMatcher::setRcsAndSignalStrength(const double signalStrength, const do
     _signalStrength = signalStrength;
 }
 
-void PointMatcher::downloadDataBaseTest(const double signalStrength, const double rcs, const QString nameTable)
+void PointMatcher::downloadDataBaseTest(const double signalStrength, const double rcs, const QString nameTable, const int tickNumber )
 {
     qDebug() << "downloadDataBaseTest" << signalStrength;
+    qDebug() << "rcs" << rcs;
+
 //    _reference_points.clear();
-    dataFromDB->loadData(nameTable,rcs,signalStrength);
+    dataFromDB->loadData(nameTable,rcs,signalStrength, tickNumber);
     _candidate_points = dataFromDB->getCoordinates();
+    mapTicAndId = dataFromDB->dataTicAndId;
+
+
+    // ------- первірка даних  про тіки та id
+        QVariantMap::const_iterator i;
+        for (i = mapTicAndId.constBegin(); i != mapTicAndId.constEnd(); ++i) {
+            qDebug() << "Key: " << i.key() << ", Value: " << i.value();
+        }
+   // ------- первірка даних  про тіки та id
+
 
 }
 
@@ -260,10 +272,6 @@ void PointMatcher::processingDataDB(const double rcs, const double distance, con
 
 
     qDebug() << "processingDataDB  " << distance;
-//    _allDataDb.clear();
-//    _allDataDb = dataFromDB->getAllData();
-
-
 
     dataFromDB->processingData(rcs, distance, azimuthBearning);
     _candidate_points = dataFromDB->getCoordinates();
@@ -272,6 +280,16 @@ void PointMatcher::processingDataDB(const double rcs, const double distance, con
 double PointMatcher::longitudeCentalPoint() const
 {
     return _longitudeCentalPoint;
+}
+
+QVariantMap PointMatcher::getMapTicAndId()
+{
+    return mapTicAndId;
+}
+
+void PointMatcher::downloadDBTecAndId(const QString nameTable)
+{
+    mapTicAndId = dataFromDB->readTicCountAndId(nameTable);
 }
 
 double PointMatcher::latitudeCentalPoint() const

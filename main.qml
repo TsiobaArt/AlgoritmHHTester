@@ -317,6 +317,9 @@ Window { // варіант де результат передається по �
     SettingsDialogSession {
         id: settingsDialog
     }
+    TicDialog {
+        id: ticDialog
+    }
 
     //        Window {
     //            id: resultsWindow

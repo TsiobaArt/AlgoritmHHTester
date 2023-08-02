@@ -8,7 +8,7 @@ import QtGraphicalEffects 1.0
 
 ///////////////////////////////////////////////////////////////////////////////////
 Popup {
-    id: settingsDialog
+    id: ticDialog
     modal: true
     width: 450
     height: 500
@@ -47,14 +47,11 @@ Popup {
                 width: parent.width
                 //                height: parent.height - rowButt.height - rowButt.anchors.bottomMargin - 10
                 height: parent.height
-                model: sessionModel
+                model: panelIntrument.uploadTestDataBase.tickModel
                 clip: true
                 spacing: 10
 
                 property int selectedIndex: -1  // Властивість для зберігання індексу виділеного елемента
-                property var tableName: model.tableName
-                property var notes: model.notes
-                property var sessionName: model.sessionName
 
                 delegate: Item {
                     id: itemDelegate
@@ -70,13 +67,11 @@ Popup {
                     }
                     Rectangle {
                         id: recBorder
-                        width: parent.width - 30
+                        width: parent.width
                         height: parent.height
                         color:  "transparent" // Змінюємо колір в залежності від того, чи обрано цей елемент
                         radius: 5
                         border.width: 2
-                        anchors.horizontalCenter: parent.horizontalCenter
-
                         border.color:listView.selectedIndex === index  ? "white" :  "grey"
                         Text {
 
@@ -86,9 +81,8 @@ Popup {
                             anchors.centerIn: parent
                             color: "white"
                             wrapMode: Text.Wrap
-                            text: "Назва сесії: " +  tableName + "\n" +
-                                  "Короткий опис: " +  sessionName + "\n" +
-                                  "Нотатка: " + notes
+                            text: "Ідентифікатор : " +  model.id + "\n" +
+                                  "Кількість записів : " +  model.ticCount + "\n"
                             font.pointSize: 9
                         }
                     }
@@ -99,16 +93,8 @@ Popup {
                         hoverEnabled: true
                         onClicked: {
                             listView.selectedIndex = index; // Встановлюємо індекс обраного елемента
-                            panelIntrument.uploadTestDataBase.customComboBox.currentText = tableName
-                            pointMatcher.downloadDBTecAndId(tableName)
-                            panelIntrument.uploadTestDataBase.tickModel.clear()
-                            var dataTic = pointMatcher.getMapTicAndId()
-
-                            var keys = Object.keys(dataTic)
-                            for (var key in dataTic) {
-                                panelIntrument.uploadTestDataBase.tickModel.append({"id": dataTic[key].id, "ticCount": dataTic[key].ticCount})
-
-                            }
+//                            panelIntrument.uploadTestDataBase.customComboBox.currentText = tableName
+                            panelIntrument.uploadTestDataBase.selectIdTick = model.id
 
                         }
                     }
@@ -129,7 +115,7 @@ Popup {
                 id: buttonSave
                 textButton: "Відкрити"
                 onPressCustomButton: {
-                    settingsDialog.close()
+                    ticDialog.close()
                     listView.selectedIndex = -1
 
                 }
@@ -139,9 +125,9 @@ Popup {
                 id: buttonCancel
                 textButton: "Відмінити"
                 onPressCustomButton: {
-                    settingsDialog.close()
-                    panelIntrument.uploadTestDataBase.customComboBox.currentText = "Відкрити сессію"
+                    ticDialog.close()
                     listView.selectedIndex = -1
+                    panelIntrument.uploadTestDataBase.selectIdTick = -1
                 }
             }
         }

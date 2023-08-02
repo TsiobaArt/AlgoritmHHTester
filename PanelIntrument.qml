@@ -495,7 +495,6 @@ Item {
                                     calculateDialog.accept()
                                     centralPoint.coordinate.latitude = pointMatcher.latitudeCentalPoint();
                                     centralPoint.coordinate.longitude = pointMatcher.longitudeCentalPoint();
-                                    console.log ( "centralPoint.coordinate.latitude " + centralPoint.coordinate.latitude)
                                 }
                             }
 

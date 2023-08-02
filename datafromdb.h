@@ -23,10 +23,14 @@ class DataFromDB : public QObject
 
 public:
     explicit DataFromDB(QObject *parent = nullptr);
-    void loadData(const QString &table, const double rcsRange, const double signalStrengthRange);
+    QVariantMap dataTicAndId;
+
+    void loadData(const QString &table, const double rcsRange, const double signalStrengthRange, const int tickNumber);
     std::vector<Point> getCoordinates() const;
     std::vector<StructData> getAllData() const;
     void processingData (const double rcs, const double distance, const double azimuthBearning);
+    QVariantMap readTicCountAndId(const QString &table);
+
 signals:
     void candidatePointsUpdated(const std::vector<Point>& points);
 private:

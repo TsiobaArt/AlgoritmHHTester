@@ -45,7 +45,7 @@ public:
 
     // ---- Дані з Бази даних
     Q_INVOKABLE void setRcsAndSignalStrength(const double signalStrength, const double rcs);
-    Q_INVOKABLE void downloadDataBaseTest (const double signalStrength, const double rcs, const QString nameTable);
+    Q_INVOKABLE void downloadDataBaseTest (const double signalStrength, const double rcs, const QString nameTable,const int tickNumber);
     // ---- Дані з Бази даних
 
     // ---- фільтрація даних з бази даних
@@ -53,6 +53,15 @@ public:
     Q_INVOKABLE double latitudeCentalPoint() const;
     Q_INVOKABLE double longitudeCentalPoint() const;
     // ---- фільтрація даних з бази даних
+
+
+
+    // -------- tickAndId
+     QVariantMap mapTicAndId;
+     Q_INVOKABLE  QVariantMap getMapTicAndId();
+     Q_INVOKABLE  void downloadDBTecAndId (const QString nameTable);
+
+    // -------- tickAndId
 
 
     std::vector<Point> generateRandomPoints(int count, double min_lat, double max_lat, double min_lon, double max_lon); // функція для генерації випадкових значень з зазначеним діапазоном

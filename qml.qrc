@@ -21,5 +21,6 @@
         <file>icon/CustomButton.qml</file>
         <file>CustomButton.qml</file>
         <file>SettingsDialogSession.qml</file>
+        <file>TicDialog.qml</file>
     </qresource>
 </RCC>
