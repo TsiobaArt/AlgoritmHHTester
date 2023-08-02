@@ -18,6 +18,9 @@ Popup {
         color: "#5E5E5E"
     }
 
+
+
+
     Rectangle {
         id: rectBackground
         anchors.fill: parent
@@ -130,6 +133,7 @@ Popup {
                 textButton: "Відкрити"
                 onPressCustomButton: {
                     settingsDialog.close()
+
                     listView.selectedIndex = -1
 
                 }
@@ -142,6 +146,7 @@ Popup {
                     settingsDialog.close()
                     panelIntrument.uploadTestDataBase.customComboBox.currentText = "Відкрити сессію"
                     listView.selectedIndex = -1
+                    panelIntrument.uploadTestDataBase.tickModel.clear()
 
                 }
             }

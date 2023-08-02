@@ -209,6 +209,7 @@ Rectangle {
 
                 Button {
                     text: "Підтвердити"
+                    enabled: tickModel.count && selectIdTick > 0 ? true : false
                     onClicked: {
                         // Дії при натисканні кнопки Підтвердити
 

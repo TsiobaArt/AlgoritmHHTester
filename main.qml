@@ -276,13 +276,18 @@ Window { // варіант де результат передається по �
                             height: 35
 
                         }
-
                         ColorOverlay {
                         anchors.fill: parent
                         source: matchedMarkerImage
                         smooth: true
                         color:"red"
                         }
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                console.log("model.id " + model.name)
+                            }
+                    }
                     }
                 }
 

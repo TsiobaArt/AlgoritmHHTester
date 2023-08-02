@@ -263,8 +263,6 @@ void PointMatcher::downloadDataBaseTest(const double signalStrength, const doubl
             qDebug() << "Key: " << i.key() << ", Value: " << i.value();
         }
    // ------- первірка даних  про тіки та id
-
-
 }
 
 void PointMatcher::processingDataDB(const double rcs, const double distance, const double azimuthBearning)
