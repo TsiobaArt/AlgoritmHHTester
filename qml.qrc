@@ -20,5 +20,6 @@
         <file>ReferencePointsItemView.qml</file>
         <file>icon/CustomButton.qml</file>
         <file>CustomButton.qml</file>
+        <file>SettingsDialogSession.qml</file>
     </qresource>
 </RCC>

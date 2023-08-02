@@ -314,57 +314,8 @@ Window { // варіант де результат передається по �
     }
 
 
-    Popup {
+    SettingsDialogSession {
         id: settingsDialog
-        modal: true
-        width: 450
-        height: 500
-        closePolicy: Popup.NoAutoClose
-        anchors.centerIn: parent
-        background: Rectangle {
-            color: "#5E5E5E"
-        }
-
-        Rectangle {
-            id: rectBackground
-            anchors.fill: parent
-            radius: 10
-            color: "#A6A1A1"
-            opacity: 0.7
-            border.width: 2
-            border.color:"gray"
-        }
-        Rectangle {
-            id: recDialog
-            anchors.fill: parent
-            radius: 10
-            color: "#5E5E5E"
-            border.width: 2
-            border.color: "gray"
-        }
-        Row {
-            id: rowButt
-            anchors.bottomMargin:   10
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 10
-            anchors.bottom: parent.bottom
-
-            CustomButton {
-                id: buttonSave
-                textButton: "Відкрити"
-                onPressCustomButton: {
-
-                }
-            }
-
-            CustomButton {
-                id: buttonCancel
-                textButton: "Відмінити"
-                onPressCustomButton: {
-                    settingsDialog.close()
-                }
-            }
-        }
     }
 
     //        Window {
