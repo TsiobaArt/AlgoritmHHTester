@@ -163,7 +163,6 @@ Rectangle {
                         placeholderText: "Rcs"
                         inputMethodHints: Qt.ImhDigitsOnly // Дозволяє вводити тільки цифри
                         width: 110
-
                     }
 
                 }
@@ -205,7 +204,7 @@ Rectangle {
                         bestMatchingPointsModel.clear()
                         previousPointsModel.clear()
 
-                        pointMatcher.downloadDataBaseTest(poinSignalStrength.text, pointRcs.text,customComboBox.currentText )
+                        pointMatcher.downloadDataBaseTest(0, pointRcs.text,customComboBox.currentText )
                         referencePointsModel = pointMatcher.getReferencePoints()
                         dataPointsModel      = pointMatcher.getCandidatePoints()
 

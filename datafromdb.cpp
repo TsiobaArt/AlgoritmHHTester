@@ -77,7 +77,7 @@ DataFromDB::DataFromDB(QObject *parent) : QObject(parent) {
 void DataFromDB::loadData(const QString &table, const double rcsRange, const double signalStrengthRange) {
     // Створюємо запит до бази даних, де вибираємо дані з вказаної таблиці
     QSqlQuery query(m_db);
-    query.prepare("SELECT data FROM " + table /*+ " WHERE id = 2"*/);
+    query.prepare("SELECT data FROM " + table /*+ " WHERE id == 3 "*/);
 
     // Виконуємо запит. Якщо є помилка - виводимо повідомлення та завершуємо функцію
     if (!query.exec()) {
@@ -99,7 +99,6 @@ void DataFromDB::loadData(const QString &table, const double rcsRange, const dou
         // Перебираємо кожен зовнішній масив в масиві вкладених масивів
         for (const QJsonValue& outerValue : qAsConst(jsonArray)) {
             QJsonArray innerArray = outerValue.toArray();
-
             // Перебираємо кожен об'єкт во внутрішньому масиві
             for (const QJsonValue& value : qAsConst(innerArray)) {
                 QJsonObject jsonObject = value.toObject();
