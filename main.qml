@@ -280,14 +280,9 @@ Window { // варіант де результат передається по �
                         anchors.fill: parent
                         source: matchedMarkerImage
                         smooth: true
-                        color:"red"
+                        color:"green"
                         }
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                console.log("model.id " + model.name)
-                            }
-                    }
+
                     }
                 }
 

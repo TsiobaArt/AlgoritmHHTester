@@ -297,7 +297,7 @@ double PointMatcher::latitudeCentalPoint() const
 
 void PointMatcher::_findLocation(const std::vector<Match>& qmlMatches)
 {
-//   _allDataDb = dataFromDB->getAllData();
+   _allDataDb = dataFromDB->getAllData();
    std::vector<Point> candidate;
    std::set<int> uniqueIndexCandidate;
 
@@ -327,8 +327,8 @@ void PointMatcher::_findLocation(const std::vector<Match>& qmlMatches)
           }
       }
 
-//      _allDataDb = filteredDataDb;
-//      findMyLocation();
+      _allDataDb = filteredDataDb;
+      findMyLocation();
 
 }
 

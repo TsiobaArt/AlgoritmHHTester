@@ -24,6 +24,21 @@ Rectangle {
     property alias tickModel:tickModel
 
     property int selectIdTick: -1
+    function convertModelToPoints(model) {
+        var points = [];
+        for (var i = 0; i < model.rowCount(); i++) {
+            var obj = model.get(i);
+            var lat = obj["latitude"];
+            var lon = obj["longitude"];
+            if (lat === undefined || lon === undefined) {
+                console.log("Error: invalid data in row " + i);
+            } else {
+                points.push({"lat": lat, "lon": lon});
+                console.log("row " + i + ": lat = " + lat + ", lon = " + lon);
+            }
+        }
+        return points;
+    }
 
     ListModel {
         id: tickModel
@@ -218,6 +233,8 @@ Rectangle {
                         bestMatchingPointsModel.clear()
                         previousPointsModel.clear()
 
+                        convertModelToPoints(referenceModel)
+                        pointMatcher.convertQVariantListToPoints (convertModelToPoints(referenceModel));
                         pointMatcher.downloadDataBaseTest(poinSignalStrength.text, pointRcs.text,customComboBox.currentText,panelIntrument.uploadTestDataBase.selectIdTick)
                         referencePointsModel = pointMatcher.getReferencePoints()
                         dataPointsModel      = pointMatcher.getCandidatePoints()

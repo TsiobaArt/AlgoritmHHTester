@@ -25,6 +25,21 @@ void ReferenceModel::updateModel()
     this->select();
 }
 
+
+QJsonObject ReferenceModel::get(const int index)
+{
+    QJsonObject obj;
+    QSqlRecord record = this->record(index);
+
+    if (record.isEmpty()) return obj;
+
+    for (auto i = 0; i < record.count(); i++)
+    {
+        obj[record.fieldName(i)] = record.value(i).toJsonValue();
+    }
+    return obj;
+}
+
 QVariant ReferenceModel::data(const QModelIndex &index, int role) const
 {
     if (index.isValid()) {

@@ -3,6 +3,7 @@
 
 #include <QSqlTableModel>
 #include <QObject>
+#include <QtCore>
 #include <QObject>
 #include <names.h>
 #include <QAbstractTableModel>
@@ -10,6 +11,7 @@
 #include <QDateTime>
 #include <QSqlQuery>
 #include <QSqlRecord>
+
 
 class ReferenceModel : public QSqlTableModel
 {
@@ -27,6 +29,7 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
     QHash<int, QByteArray> roleNames() const;
     Q_INVOKABLE void updateModel();
+    Q_INVOKABLE QJsonObject get(const int index);
 
 
 };
