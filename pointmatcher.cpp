@@ -8,7 +8,7 @@ bool operator<(const Match &m1, const Match &m2) {
 
 PointMatcher::PointMatcher(QObject *parent) : QObject(parent)
 {
-//    dataFromDB  =   new DataFromDB(this);
+    dataFromDB  =   new DataFromDB(this);
 //    dataFromDB->loadData("session_14_06_07_33",10,10);
 //    for (const Point& point : dataFromDB->getCoordinates()) {
 //          qDebug() << "Latitude:" << point.lat << "Longitude:" << point.lon;

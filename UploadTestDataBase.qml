@@ -20,7 +20,7 @@ Rectangle {
     border.width: 2
     border.color:  "white"
 
-
+    property alias customComboBox: customComboBox
     property alias dataBaseDialog: dataBaseDialog
     Text {
         id: textTestDataBase
@@ -94,7 +94,7 @@ Rectangle {
                     width: 200
                     height: 30
                     property int currentIndex: -1
-                    property var currentText: ""
+                    property string currentText: "Вікрити сессію"
                     property var model: sessionModel
                     signal activated(int index)
                     readonly property real itemHeight: 30  // Add this line
@@ -108,7 +108,7 @@ Rectangle {
                         border.color: "black"
                         Text {
                             anchors.centerIn: parent
-                            text: "Відкрити сессію"
+                            text: customComboBox.currentText
                         }
                     }
 
@@ -198,14 +198,14 @@ Rectangle {
                     text: "Підтвердити"
                     onClicked: {
                         // Дії при натисканні кнопки Підтвердити
-                        console.log(myComboBox.currentText)
+                        console.log(customComboBox.currentText)
 
                         referencePointsModel = []
                         dataPointsModel = []
                         bestMatchingPointsModel.clear()
                         previousPointsModel.clear()
 
-                        pointMatcher.downloadDataBaseTest(poinSignalStrength.text, pointRcs.text,myComboBox.currentText )
+                        pointMatcher.downloadDataBaseTest(poinSignalStrength.text, pointRcs.text,customComboBox.currentText )
                         referencePointsModel = pointMatcher.getReferencePoints()
                         dataPointsModel      = pointMatcher.getCandidatePoints()
 

@@ -35,6 +35,7 @@ Item {
     property real distanceThreshold: 0.001
     property string angleThreshold: "5.0"
 
+    property alias uploadTestDataBase: uploadTestDataBase
 
     MouseArea {
         anchors.fill: parent

@@ -97,6 +97,8 @@ Popup {
                         hoverEnabled: true
                         onClicked: {
                             listView.selectedIndex = index; // Встановлюємо індекс обраного елемента
+                            panelIntrument.uploadTestDataBase.customComboBox.currentText = tableName
+
                         }
                     }
                 }
@@ -116,6 +118,8 @@ Popup {
                 id: buttonSave
                 textButton: "Відкрити"
                 onPressCustomButton: {
+                    settingsDialog.close()
+                    listView.selectedIndex = -1
 
                 }
             }
@@ -125,6 +129,8 @@ Popup {
                 textButton: "Відмінити"
                 onPressCustomButton: {
                     settingsDialog.close()
+                    panelIntrument.uploadTestDataBase.customComboBox.currentText = "Відкрити сессію"
+                    listView.selectedIndex = -1
                 }
             }
         }

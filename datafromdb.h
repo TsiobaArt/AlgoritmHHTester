@@ -33,7 +33,7 @@ private:
     QSqlDatabase m_db;
     std::vector<Point> m_coordinates;
     std::vector <StructData> _allDataDb; // Добавлю структру повних даних з DB
-    QString _dbName {qApp->applicationDirPath() + "/headDB.db"};
+    QString _dbName {qApp->applicationDirPath() + "/headDBNew.db"};
     QString tableName;
 };
 
