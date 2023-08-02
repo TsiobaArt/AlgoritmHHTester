@@ -59,7 +59,7 @@ Popup {
                 delegate: Item {
                     id: itemDelegate
                     width: recDialog.width - 20
-                    height: 76
+                    height: 73
 
                     Component.onCompleted: {
                         if (listView.model.count > 0) {
