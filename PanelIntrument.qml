@@ -13,7 +13,7 @@ import QtQuick.Controls.Styles 1.4
 Item {
     id: panelIntrument
     width: 180
-    height: 420
+    height: 300
     anchors.left: parent.left
     anchors.leftMargin: 5
     anchors.verticalCenter: parent.verticalCenter
@@ -54,54 +54,54 @@ Item {
             anchors.fill: parent
             topPadding: 10
             spacing: 20
-            Rectangle {
-                id: uploadTest
-                width: parent.width - 20
-                anchors.horizontalCenter: parent.horizontalCenter
-                height: 40
-                color: parent.parent.color
-                radius: 10
-                border.width: 2
-                border.color:  "white"
+//            Rectangle { // готовий текст розкоментувати при потребі
+//                id: uploadTest
+//                width: parent.width - 20
+//                anchors.horizontalCenter: parent.horizontalCenter
+//                height: 40
+//                color: parent.parent.color
+//                radius: 10
+//                border.width: 2
+//                border.color:  "white"
 
-                Text {
-                    id: text
-                    text: qsTr("Готовий тест ")
-                    anchors.centerIn: parent
-                    color: "white"
-                    font.pixelSize: 16
+//                Text {
+//                    id: text
+//                    text: qsTr("Готовий тест ")
+//                    anchors.centerIn: parent
+//                    color: "white"
+//                    font.pixelSize: 16
 
-                }
+//                }
 
-                MouseArea {
-                    anchors.fill: parent
-                    hoverEnabled: true
+//                MouseArea {
+//                    anchors.fill: parent
+//                    hoverEnabled: true
 
-                    onEntered: {
-                        uploadTest.border.color = "lightblue" // Зміна кольору обводки при наведенні
-                    }
+//                    onEntered: {
+//                        uploadTest.border.color = "lightblue" // Зміна кольору обводки при наведенні
+//                    }
 
-                    onExited: {
-                        uploadTest.border.color = "white" // Повернення початкового кольору обводки
-                    }
+//                    onExited: {
+//                        uploadTest.border.color = "white" // Повернення початкового кольору обводки
+//                    }
 
-                    onPressed: {
-                        uploadTest.scale = 0.9 // Зменшення масштабу при натисканні
-                        referencePointsModel = []
-                        dataPointsModel = []
-                        bestMatchingPointsModel.clear()
-                        previousPointsModel.clear()
+//                    onPressed: {
+//                        uploadTest.scale = 0.9 // Зменшення масштабу при натисканні
+//                        referencePointsModel = []
+//                        dataPointsModel = []
+//                        bestMatchingPointsModel.clear()
+//                        previousPointsModel.clear()
 
-                    }
+//                    }
 
-                    onReleased: {
-                        uploadTest.scale = 1 // Повернення початкового масштабу при відпусканні
-                        pointMatcher.downloadCompletedTest()
-                        referencePointsModel = pointMatcher.getReferencePoints()
-                        dataPointsModel      = pointMatcher.getCandidatePoints()
-                    }
-                }
-            }
+//                    onReleased: {
+//                        uploadTest.scale = 1 // Повернення початкового масштабу при відпусканні
+//                        pointMatcher.downloadCompletedTest()
+//                        referencePointsModel = pointMatcher.getReferencePoints()
+//                        dataPointsModel      = pointMatcher.getCandidatePoints()
+//                    }
+//                }
+//            }
             UploadTestDataBase {
                 id: uploadTestDataBase
             }
@@ -253,9 +253,9 @@ Item {
                             }
                         }
 
-                        GenereTestRandom {
-                            id: genereTest
-                        }
+//                        GenereTestRandom { // сгенерованый тест розкоментувати при потребі
+//                            id: genereTest
+//                        }
 
 
             Rectangle {
@@ -385,9 +385,10 @@ Item {
                     title: "Налаштування обчислення"
                     modal: Qt.WindowModal
                     topPadding: 0
-                    leftMargin:  mainWindow.width/2 - genereTest.settingsDialog.width/2
-                    bottomMargin:   mainWindow.height/2 - genereTest.settingsDialog.height/2
-
+//                    leftMargin:  mainWindow.width/2 - genereTest.settingsDialog.width/2
+//                    bottomMargin:   mainWindow.height/2 - genereTest.settingsDialog.height/2
+                     leftMargin:  mainWindow.width/2  -  dialogPostProcessingData.width/2
+                     bottomMargin:   mainWindow.height/2  - dialogPostProcessingData.width/2
                     Column {
                         spacing: 10
 
@@ -511,16 +512,6 @@ Item {
                     }
                 }
             }
-//            Rectangle {
-//                id: calculatePosition
-//                width: parent.width - 20
-//                anchors.horizontalCenter: parent.horizontalCenter
-//                height: 40
-//                radius: 10
-//                color: parent.parent.color
-//                border.width: 2
-//                border.color:  "white"
-//            }
         }
     }
 }

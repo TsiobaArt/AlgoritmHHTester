@@ -46,7 +46,7 @@ Rectangle {
 
     Text {
         id: textTestDataBase
-        text: qsTr("Дані Сан-Франциско")
+        text: qsTr("Дані з  DB")
         anchors.centerIn: parent
         color: "white"
         font.pixelSize: 16
