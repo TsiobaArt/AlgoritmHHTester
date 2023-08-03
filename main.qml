@@ -24,6 +24,14 @@ Window { // варіант де результат передається по �
     property int mapStyle1: 0
     property int mapStyle2: 0
 
+    function setCenterReferenceMap(latitude, longitude) {
+        console.log ("setCenterReferenceMap")
+        console.log (latitude, longitude)
+         referenceMap.center =  QtPositioning.coordinate(latitude, longitude)
+     }
+    function setCenterDataMap(latitude, longitude) {
+         itemMap2.dataMap.center =  QtPositioning.coordinate(latitude, longitude)
+     }
     Connections {
         target: pointMatcher
         function onMatchesFound(matches) {
@@ -300,6 +308,11 @@ Window { // варіант де результат передається по �
             PanelIntrument {
                 id: panelIntrument
             }
+
+            InfoMenuCoordinateCentalPoint {
+                id: infoMenuCoordinateCentalPoint
+            }
+
         }
 
         Rectangle { // розділяємо карти ддля кращої візуалазації

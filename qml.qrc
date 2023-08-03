@@ -22,5 +22,6 @@
         <file>CustomButton.qml</file>
         <file>SettingsDialogSession.qml</file>
         <file>TicDialog.qml</file>
+        <file>InfoMenuCoordinateCentalPoint.qml</file>
     </qresource>
 </RCC>

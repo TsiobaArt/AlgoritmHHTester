@@ -15,6 +15,7 @@
 #include <QSqlError>
 #include <QVector>
 #include <iostream>
+#include <QGeoCoordinate>
 
 class DataFromDB : public QObject
 {

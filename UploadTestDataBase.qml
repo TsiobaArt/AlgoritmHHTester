@@ -34,7 +34,6 @@ Rectangle {
                 console.log("Error: invalid data in row " + i);
             } else {
                 points.push({"lat": lat, "lon": lon});
-                console.log("row " + i + ": lat = " + lat + ", lon = " + lon);
             }
         }
         return points;
@@ -238,6 +237,13 @@ Rectangle {
                         pointMatcher.downloadDataBaseTest(poinSignalStrength.text, pointRcs.text,customComboBox.currentText,panelIntrument.uploadTestDataBase.selectIdTick)
                         referencePointsModel = pointMatcher.getReferencePoints()
                         dataPointsModel      = pointMatcher.getCandidatePoints()
+
+
+
+                        // ----  фокус на нові точки
+                        setCenterReferenceMap(referencePointsModel[0].lat,referencePointsModel[0].lon )
+                        setCenterDataMap(dataPointsModel[0].lat,dataPointsModel[0].lon )
+                        // ----  фокус на нові точки
 
 
                         dataBaseDialog.accept()

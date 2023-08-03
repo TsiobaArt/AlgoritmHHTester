@@ -248,8 +248,6 @@ void PointMatcher::setRcsAndSignalStrength(const double signalStrength, const do
 
 void PointMatcher::downloadDataBaseTest(const double signalStrength, const double rcs, const QString nameTable, const int tickNumber )
 {
-    qDebug() << "downloadDataBaseTest" << signalStrength;
-    qDebug() << "rcs" << rcs;
 
 //    _reference_points.clear();
     dataFromDB->loadData(nameTable,rcs,signalStrength, tickNumber);
@@ -257,19 +255,16 @@ void PointMatcher::downloadDataBaseTest(const double signalStrength, const doubl
     mapTicAndId = dataFromDB->dataTicAndId;
 
 
-    // ------- первірка даних  про тіки та id
-        QVariantMap::const_iterator i;
-        for (i = mapTicAndId.constBegin(); i != mapTicAndId.constEnd(); ++i) {
-            qDebug() << "Key: " << i.key() << ", Value: " << i.value();
-        }
-   // ------- первірка даних  про тіки та id
+//    // ------- первірка даних  про тіки та id
+//        QVariantMap::const_iterator i;
+//        for (i = mapTicAndId.constBegin(); i != mapTicAndId.constEnd(); ++i) {
+//            qDebug() << "Key: " << i.key() << ", Value: " << i.value();
+//        }
+//   // ------- первірка даних  про тіки та id
 }
 
 void PointMatcher::processingDataDB(const double rcs, const double distance, const double azimuthBearning)
 {
-
-
-    qDebug() << "processingDataDB  " << distance;
 
     dataFromDB->processingData(rcs, distance, azimuthBearning);
     _candidate_points = dataFromDB->getCoordinates();
@@ -308,7 +303,6 @@ void PointMatcher::_findLocation(const std::vector<Match>& qmlMatches)
    }
 
    for (const auto &value :uniqueIndexCandidate ) {
-    qDebug() << "res " << value;
     candidate.push_back(_candidate_points[value]);
    }
 
@@ -368,11 +362,13 @@ void PointMatcher::findMyLocation()
       // Повертаємо наше місцезнаходження
       _latitudeCentalPoint = coordinates.first;
       _longitudeCentalPoint = coordinates.second;
-      qDebug() << "findMyLocation " << _latitudeCentalPoint;
+      qDebug() << "findMyLocation latitude " << _latitudeCentalPoint;
+      qDebug() << "findMyLocation latitude " << _longitudeCentalPoint;
+
     }
 }
 
-//void PointMatcher::findMyLocation() {
+//void PointMatcher::findMyLocation() { // усереднен значення
 //    int numPoints = _allDataDb.size();
 //    if (numPoints < 3) {
 //        throw std::runtime_error("Insufficient data for trilateration");

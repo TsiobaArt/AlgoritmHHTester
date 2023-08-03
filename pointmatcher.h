@@ -13,6 +13,8 @@
 #include <set>
 #include "StructData.h"
 #include "datafromdb.h"
+#include <QGeoCoordinate>
+
 class PointMatcher : public QObject {
 
     Q_OBJECT

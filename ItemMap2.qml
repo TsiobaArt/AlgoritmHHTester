@@ -11,7 +11,7 @@ Item {
     id: itemMap2
     width: parent.width / 2
     height: parent.height
-
+    property alias dataMap: dataMap
 
     Map {
         id: dataMap

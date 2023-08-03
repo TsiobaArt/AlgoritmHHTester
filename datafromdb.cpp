@@ -1,14 +1,14 @@
 #include "datafromdb.h"
 
 DataFromDB::DataFromDB(QObject *parent) : QObject(parent) {
-    m_db = QSqlDatabase::addDatabase("QSQLITE");
-    m_db.setDatabaseName(_dbName);
+//    m_db = QSqlDatabase::addDatabase("QSQLITE");
+//    m_db.setDatabaseName(_dbName);
 
-    if (!m_db.open()) {
-        qDebug() << "Error: connection with database fail";
-    } else {
-        qDebug() << "Database: connection ok";
-    }
+//    if (!m_db.open()) {
+//        qDebug() << "Error: connection with database fail";
+//    } else {
+//        qDebug() << "Database: connection ok";
+//    }
 }
 
 //void DataFromDB::loadData(const QString &table, const double rcsRange, const double signalStrengthRange) {
@@ -78,11 +78,9 @@ void DataFromDB::loadData(const QString &table, const double rcsRange, const dou
     // Створюємо запит до бази даних, де вибираємо дані з вказаної таблиці
     QSqlQuery query(m_db);
 
-
     qDebug() << "tickNumber " << tickNumber;
     query.prepare("SELECT data FROM " + table + " WHERE id == :tickNumber");
     query.bindValue(":tickNumber", tickNumber);
-
 
     // Виконуємо запит. Якщо є помилка - виводимо повідомлення та завершуємо функцію
     if (!query.exec()) {
@@ -112,6 +110,8 @@ void DataFromDB::loadData(const QString &table, const double rcsRange, const dou
                 // Розпарсовуємо масив "list" в вектор об'єктів StructData
                 QVector<StructData> dataList;
                 QJsonArray listArray = jsonObject.value("list").toArray();
+//                qDebug () << "headLatitude" <<value["headLatitude"].toDouble();
+//                qDebug () << "headLongitude" <<value["headLongitude"].toDouble();
 
                 // Перебираємо кожен об'єкт в масиві "list"
                 for (const QJsonValue& itemValue : qAsConst(listArray)) {
@@ -194,7 +194,6 @@ void DataFromDB::processingData(const double rcs, const double distance, const d
 
 
     m_coordinates.clear();
-    qDebug() << "distance " << distance;
     std::vector<std::vector<StructData>> clusters;
     std::sort(_allDataDb.begin(), _allDataDb.end(), [](const StructData& a, const StructData& b) { // сортування від меншого до більшого
           return a.Distance < b.Distance;
