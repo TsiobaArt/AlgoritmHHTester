@@ -66,6 +66,9 @@ MapItemView {
                 if (mouse.button == Qt.RightButton) {
                     contextMenu.popup()
                 }
+                console.log ( "referencePointsItemView model.lat : ",  modelData.lat)
+                console.log ( "referencePointsItemView model.lon : ",  modelData.lon)
+
             }
             onReleased:  {
                 if (mouse.button == Qt.LeftButton) {

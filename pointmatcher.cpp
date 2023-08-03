@@ -549,6 +549,8 @@ std::vector<Match> PointMatcher::_selectBestMatches(const std::vector<Match>& ma
     std::vector<Match> filtered_matches = _filterCandidatesByRadius(best_matches, _reference_points, radius_multiplier);
 
     std::vector<Match> filtered_matchedDegree = _filterCandidatesByDegree(filtered_matches, grad_threshold); // додав фільтрацію по градусній мірі
+//    std::vector<Match> filtered_matchedDegree = _filterCandidatesByDegree(best_matches, grad_threshold); // додав фільтрацію по градусній мірі
+
 //    return filtered_matches;
     return filtered_matchedDegree;
 

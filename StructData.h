@@ -33,6 +33,7 @@ struct Match {
     size_t cand_idx2;
     double distance_diff;
     double angle_diff;
+
 };
 
 bool operator<(const Match &m1, const Match &m2); // потрібно було перегрузити для для того щоб порівнювати

@@ -67,6 +67,8 @@ MapItemView {
                 if (mouse.button == Qt.RightButton) {
                     contextMenu2.popup()
                 }
+                console.log ( "Candidate model.lat : ",  modelData.lat)
+                console.log ( "Candidate model.lon : ",  modelData.lon)
             }
 
             onReleased:  {
