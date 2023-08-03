@@ -80,7 +80,6 @@ void DataFromDB::loadData(const QString &table, const double rcsRange, const dou
     // Створюємо запит до бази даних, де вибираємо дані з вказаної таблиці
     QSqlQuery query(m_db);
 
-    qDebug() << "tickNumber " << tickNumber;
     query.prepare("SELECT data FROM " + table + " WHERE id == :tickNumber");
     query.bindValue(":tickNumber", tickNumber);
 
@@ -199,7 +198,7 @@ void DataFromDB::processingData(const double rcs, const double distance, const d
 
 
     m_coordinates.clear();
-    std::vector<std::vector<StructData>> clusters;
+    std::vector<std::vector<StructData>> clusters; //  вектор векторів
     std::sort(_allDataDb.begin(), _allDataDb.end(), [](const StructData& a, const StructData& b) { // сортування від меншого до більшого
           return a.Distance < b.Distance;
       });

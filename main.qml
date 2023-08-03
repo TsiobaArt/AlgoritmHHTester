@@ -307,8 +307,8 @@ Window { // варіант де результат передається по �
                 // -- CEntralPoint Real Data
                 MapQuickItem {
                     id: centralPointReal
-                    anchorPoint.x: 20
-                    anchorPoint.y: 20
+                    anchorPoint.x: imageCentralPoint.width / 2
+                    anchorPoint.y: imageCentralPoint.height / 2
                     sourceItem: Image {
                         id: imageCentralPoint
                         source: "qrc:/icon/target.svg"
@@ -318,7 +318,7 @@ Window { // варіант де результат передається по �
                             id: colorImg
                             anchors.fill: imageCentralPoint
                             source: imageCentralPoint
-                            color: "green"
+                            color: "red"
                         }
                     }
                 }
@@ -353,90 +353,6 @@ Window { // варіант де результат передається по �
         id: ticDialog
     }
 
-    //        Window {
-    //            id: resultsWindow
-    //            title: "Результати"
-    //            visible: true
-    //            width: 400
-    //            height: 500
 
-    //            ListView {
-    //                anchors.fill: parent
-    //                model: bestMatchingPointsModel
-    //                delegate: Text {
-    //                    text: "Index: " + index +
-    //                       "\nReference Point index: " + model.ref_point.idx +   " Reference Point: " + model.ref_point.lat + ", " + model.ref_point.lon +
-    //                       "\nCandidate Point index: " + model.cand_point.idx +  " Candidate Point: " + model.cand_point.lat + ", " + model.cand_point.lon +
-    //                       "\nMatched: " + (model.matched ? "Yes" : "No")
-    //                    font.pixelSize: 16
-    //                }
-    //            }
-    //        }
-
-//    Window {
-//        id:test
-//        title: "Test"
-//        visible: true
-//        width: 500
-//        height: mainWindow.height
-//        x: mainWindow.x + mainWindow.width  // Зміщуємо вікно справа від основного вікна
-//        y: mainWindow.y  // Встановлюємо вікно на ту ж саму горизонтальну лінію, що і основне вікно
-//        ListView {
-//            id: listView
-//            anchors.fill: parent
-//            model: sessionModel
-//            header: Item {
-//                width: listView.width
-//                height: 50
-//                Column {
-//                    spacing: 5
-//                    Row {
-//                        spacing: 10
-//                        Text { text: "ID" ;    width: 50 }
-//                        Rectangle {height: 40; width: 2; color: "black"}
-
-//                        Text { text:  "Data";width: 100 }
-//                        Rectangle {height: parent.height; width: 2; color: "black"}
-
-//                        Text { text: "Назва таблиці"  ; width: 200}
-//                        Rectangle {height: parent.height; width: 2; color: "black"}
-
-//                        Text { text:   "Назва сесії" ; width: 200 }
-//                        Rectangle {height: parent.height; width: 2; color: "black"}
-
-//                        Text { text:  "Нотатки"; width: 500 }
-//                        Rectangle {height: parent.height; width: 2; color: "black"}
-
-//                    }
-//                    Rectangle {width: parent.width; height: 2; color: "black"}
-
-//                }
-//            }
-//            delegate: Item {
-//                width: listView.width
-//                height: 50
-//                Column {
-//                    spacing: 5
-//                    Row {
-//                        spacing: 10
-
-//                        Text { text: model.id  ;  width: 50 }
-//                        Rectangle {height: 40; width: 2; color: "black"}
-//                        Text { text:  model.date; width: 100}
-//                        Rectangle {height: parent.height; width: 2; color: "black"}
-//                        Text { text: model.tableName  ; width: 200}
-//                        Rectangle {height: parent.height; width: 2; color: "black"}
-//                        Text { text:   model.sessionName ; width: 200 }
-//                        Rectangle {height: parent.height; width: 2; color: "black"}
-//                        Text { text:  model.notes; width: 500 }
-//                        Rectangle {height: parent.height; width: 2; color: "black"}
-
-//                    }
-
-//                    Rectangle {width: parent.width; height: 2; color: "black"}
-//                }
-//            }
-//        }
-//    }
 }
 

@@ -122,7 +122,24 @@ Item {
         BestMatchingPointsMapView {
             id: bestMatchingPointsMapView
         }
-
+        MapQuickItem {
+            id: centralPointReal2
+            anchorPoint.x: imageCentralPoint2.width / 2
+            anchorPoint.y: imageCentralPoint2.height / 2
+            coordinate : centralPointReal.coordinate
+            sourceItem: Image {
+                id: imageCentralPoint2
+                source: "qrc:/icon/target.svg"
+                sourceSize.width: 40
+                sourceSize.height: 40
+                ColorOverlay {
+                    id: colorImg2
+                    anchors.fill: imageCentralPoint2
+                    source: imageCentralPoint2
+                    color: "red"
+                }
+            }
+        }
         MapItemView {
             model: previousPointsModel
             delegate: MapQuickItem {
@@ -142,5 +159,6 @@ Item {
         BestMatchingPointsViewMap {
             id: bestMatchingPointsViewMap
         }
+
     }
 }

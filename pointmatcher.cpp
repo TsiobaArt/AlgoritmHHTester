@@ -64,7 +64,7 @@ QVariantList PointMatcher::findMatches(double distance_threshold, double angle_t
     QVariantList qmlMatches;
 
     // -------------- Тестую знаходження позиції
-    _findLocation(best_matches);
+//    _findLocation(best_matches);
     // -------------- Тестую знаходження позиції
 
     for (const Match &match : best_matches  /*matches*/) {
@@ -662,13 +662,8 @@ void PointMatcher::startFindMatches(double distance_threshold, double angle_thre
 
 void PointMatcher::getCentalPointCoordinate(double latitude, double longitude)
 {
-    qDebug () << "latitude " << latitude;
-    qDebug () << "longitude " << longitude;
-
     coordinateScan.setLongitude(longitude);
     coordinateScan.setLatitude(latitude);
-
-
 }
 
 double PointMatcher::getSignalStrength() const

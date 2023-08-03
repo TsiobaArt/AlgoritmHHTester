@@ -494,8 +494,15 @@ Item {
                                     console.log(" Шукати найкращі співпадіння: " + bestMatches.checked )
                                     console.log(" Шукати всі співпадіння: "  + allMatches.checked )
                                     calculateDialog.accept()
-                                    centralPoint.coordinate.latitude = pointMatcher.latitudeCentalPoint();
-                                    centralPoint.coordinate.longitude = pointMatcher.longitudeCentalPoint();
+
+                                    var latitudeCalc =  pointMatcher.latitudeCentalPoint();
+                                    var longitudeCalc = pointMatcher.longitudeCentalPoint();
+
+                                    centralPoint.coordinate.latitude = latitudeCalc;
+                                    centralPoint.coordinate.longitude = longitudeCalc;
+                                    infoMenuCoordinateCentalPoint.latitudeС = latitudeCalc;
+                                    infoMenuCoordinateCentalPoint.longitudeС = longitudeCalc;
+//                                    infoMenuCoordinateCentalPoint.diference = QtPositioning.coordinate(latitudeCalc,longitudeCalc).distance
 
                                 }
                             }
