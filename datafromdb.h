@@ -34,6 +34,7 @@ public:
 
 signals:
     void candidatePointsUpdated(const std::vector<Point>& points);
+    void sendCoordinateScan (double latitude, double longitude);
 private:
     QSqlDatabase m_db;
     std::vector<Point> m_coordinates;

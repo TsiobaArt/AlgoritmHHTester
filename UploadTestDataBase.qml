@@ -241,8 +241,19 @@ Rectangle {
 
 
                         // ----  фокус на нові точки
-                        setCenterReferenceMap(referencePointsModel[0].lat,referencePointsModel[0].lon )
-                        setCenterDataMap(dataPointsModel[0].lat,dataPointsModel[0].lon )
+                        if (referencePointsModel.length > 0 && referencePointsModel[0].lat && referencePointsModel[0].lon) {
+                            setCenterReferenceMap(referencePointsModel[0].lat,referencePointsModel[0].lon );
+                        }
+
+                        if (dataPointsModel.length > 0 && dataPointsModel[0].lat && dataPointsModel[0].lon) {
+                            setCenterDataMap(dataPointsModel[0].lat,dataPointsModel[0].lon );
+                        }
+
+
+                        var coordinateCenralReal = pointMatcher.getCoordinateScan()
+                        infoMenuCoordinateCentalPoint.latitudeR = coordinateCenralReal.latitude
+                        infoMenuCoordinateCentalPoint.longitudeR = coordinateCenralReal.longitude
+                        centralPointReal.coordinate = QtPositioning.coordinate(coordinateCenralReal.latitude, coordinateCenralReal.longitude)
                         // ----  фокус на нові точки
 
 

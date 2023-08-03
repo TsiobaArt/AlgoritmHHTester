@@ -9,6 +9,8 @@ DataFromDB::DataFromDB(QObject *parent) : QObject(parent) {
 //    } else {
 //        qDebug() << "Database: connection ok";
 //    }
+
+
 }
 
 //void DataFromDB::loadData(const QString &table, const double rcsRange, const double signalStrengthRange) {
@@ -94,6 +96,9 @@ void DataFromDB::loadData(const QString &table, const double rcsRange, const dou
     m_coordinates.clear();
     _allDataDb.clear();
 
+    double headLatitude = 0.0;
+    double headLongitude = 0.0;
+
     // Починаємо цикл для кожного запису, отриманого в результаті запиту
     while (query.next()) {
         // Отримуємо дані у вигляді JSON рядка
@@ -110,9 +115,8 @@ void DataFromDB::loadData(const QString &table, const double rcsRange, const dou
                 // Розпарсовуємо масив "list" в вектор об'єктів StructData
                 QVector<StructData> dataList;
                 QJsonArray listArray = jsonObject.value("list").toArray();
-//                qDebug () << "headLatitude" <<value["headLatitude"].toDouble();
-//                qDebug () << "headLongitude" <<value["headLongitude"].toDouble();
-
+                headLatitude = value["headLatitude"].toDouble();
+                headLongitude = value["headLongitude"].toDouble();
                 // Перебираємо кожен об'єкт в масиві "list"
                 for (const QJsonValue& itemValue : qAsConst(listArray)) {
                     QJsonObject item = itemValue.toObject();
@@ -151,6 +155,7 @@ void DataFromDB::loadData(const QString &table, const double rcsRange, const dou
             }
         }
     }
+    sendCoordinateScan (headLatitude,headLongitude);
 }
 
 QVariantMap DataFromDB::readTicCountAndId(const QString &table)

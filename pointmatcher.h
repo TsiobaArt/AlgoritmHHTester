@@ -57,7 +57,8 @@ public:
     // ---- фільтрація даних з бази даних
 
 
-
+    Q_INVOKABLE QGeoCoordinate getCoordinateScan();
+    QGeoCoordinate                  coordinateScan;
     // -------- tickAndId
      QVariantMap mapTicAndId;
      Q_INVOKABLE  QVariantMap getMapTicAndId();
@@ -165,6 +166,7 @@ public:
 public slots:
     void updateCandidatePoints(const std::vector<Point>& points);
     void startFindMatches(double distance_threshold, double angle_threshold, double allMode, double grad_threshold); // зробив слот на мйбутне який буде запускати алгоритм в іншому потоці
+    void getCentalPointCoordinate(double latitude, double longitude);
 private:
     std::vector<Point> _reference_points;
     std::vector<Point> _candidate_points;

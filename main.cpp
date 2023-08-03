@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
     QElapsedTimer timer;
     timer.start();
 
-
     engine.rootContext()->setContextProperty("pointMatcher", &point_matcher);
     engine.rootContext()->setContextProperty("sessionModel", sessionModel);
     engine.rootContext()->setContextProperty("referenceModel", referenceModel);

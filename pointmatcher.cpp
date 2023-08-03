@@ -14,6 +14,9 @@ PointMatcher::PointMatcher(QObject *parent) : QObject(parent)
 //          qDebug() << "Latitude:" << point.lat << "Longitude:" << point.lon;
 //      }//    _candidate_points = dataFromDB->getCoordinates();
 //    setCandidatePoints( dataFromDB->getCoordinates());
+
+    QObject::connect(dataFromDB, &DataFromDB::sendCoordinateScan, this, &PointMatcher::getCentalPointCoordinate);
+
 }
 
 void PointMatcher::setReferencePoints(const std::vector<Point>& points) {
@@ -273,6 +276,11 @@ void PointMatcher::processingDataDB(const double rcs, const double distance, con
 double PointMatcher::longitudeCentalPoint() const
 {
     return _longitudeCentalPoint;
+}
+
+QGeoCoordinate PointMatcher::getCoordinateScan()
+{
+    return coordinateScan;
 }
 
 QVariantMap PointMatcher::getMapTicAndId()
@@ -649,7 +657,18 @@ void PointMatcher::startFindMatches(double distance_threshold, double angle_thre
         QVariantList qmlMatches = findMatches(distance_threshold, angle_threshold, grad_threshold);
 
         emit matchesFound(qmlMatches);
-    }); }
+        }); }
+}
+
+void PointMatcher::getCentalPointCoordinate(double latitude, double longitude)
+{
+    qDebug () << "latitude " << latitude;
+    qDebug () << "longitude " << longitude;
+
+    coordinateScan.setLongitude(longitude);
+    coordinateScan.setLatitude(latitude);
+
+
 }
 
 double PointMatcher::getSignalStrength() const

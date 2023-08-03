@@ -304,6 +304,25 @@ Window { // варіант де результат передається по �
                 BestMatchingPointsItemView {
                     id: bestMatchingPointsItemViewLine
                 }
+                // -- CEntralPoint Real Data
+                MapQuickItem {
+                    id: centralPointReal
+                    anchorPoint.x: 20
+                    anchorPoint.y: 20
+                    sourceItem: Image {
+                        id: imageCentralPoint
+                        source: "qrc:/icon/target.svg"
+                        sourceSize.width: 40
+                        sourceSize.height: 40
+                        ColorOverlay {
+                            id: colorImg
+                            anchors.fill: imageCentralPoint
+                            source: imageCentralPoint
+                            color: "green"
+                        }
+                    }
+                }
+                // -- CEntralPoint Real Data
             }
             PanelIntrument {
                 id: panelIntrument
