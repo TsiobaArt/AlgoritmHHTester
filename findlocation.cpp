@@ -5,3 +5,8 @@ FindLocation::FindLocation(QObject *parent)
 {
 
 }
+
+void FindLocation::sortedDataMathes(const std::vector<Match> &qmlMathes)
+{
+
+}
