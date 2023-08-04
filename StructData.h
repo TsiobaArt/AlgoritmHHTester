@@ -22,6 +22,8 @@ struct StructData {
 struct Point {
     double lat;
     double lon;
+    double dist;
+
 };
 
 Q_DECLARE_METATYPE(Point)
@@ -33,6 +35,31 @@ struct Match {
     size_t cand_idx2;
     double distance_diff;
     double angle_diff;
+
+
+    // ----------------------------
+    double ref_idx1_lat;
+    double ref_idx1_lot;
+    double ref_idx1_Dist;
+
+
+    double ref_idx2_lat;
+    double ref_idx2_lot;
+    double ref_idx2_Dist;
+
+
+    double cand_idx1_lat;
+    double cand_idx1_lon;
+    double cand_idx1_Dist;
+
+    double cand_idx2_lat;
+    double cand_idx2_lon;
+    double cand_idx2_Dist;
+
+
+
+    // ----------------------------
+
 
 };
 

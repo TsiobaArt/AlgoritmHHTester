@@ -196,16 +196,29 @@ std::vector<StructData> DataFromDB::getAllData() const {
 void DataFromDB::processingData(const double rcs, const double distance, const double azimuthBearning)
 {
 
-
+    qDebug () <<  "rcs " <<  rcs ;
     m_coordinates.clear();
     std::vector<std::vector<StructData>> clusters; //  вектор векторів
     std::sort(_allDataDb.begin(), _allDataDb.end(), [](const StructData& a, const StructData& b) { // сортування від меншого до більшого
           return a.Distance < b.Distance;
       });
+
+
+    // =========================================== робиться для видалення данї  які не підходять під фільтер Rcs
+
+    std::vector<StructData> filteredDataDb;
+    std::copy_if(_allDataDb.begin(), _allDataDb.end(), std::back_inserter(filteredDataDb),
+                 [&rcs](const StructData& data){ return data.Rcs > rcs; });
+
+    _allDataDb = std::move(filteredDataDb);
+
+    // =========================================== робиться для видалення данї  які не підходять під фільтер Rcs
+
 //    for (const auto& data : _allDataDb) {
 //        std::cout  << ", Distance: " << data.Distance;
 //    }
     for (const auto& data : _allDataDb) {
+//        if (data.Rcs > rcs) { // додав перевірку на Rcs для додаткового фільтру
            if (clusters.empty() ||
                (data.Distance - clusters.back().back().Distance) > distance) {
                // Якщо clusters порожній або остання дистанція в останньому кластері відрізняється
@@ -215,6 +228,7 @@ void DataFromDB::processingData(const double rcs, const double distance, const d
                // В іншому випадку додаємо дані до останнього кластеру
                clusters.back().push_back(data);
            }
+//        }
        }
 
 //       for (const auto& cluster : clusters) {

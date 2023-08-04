@@ -13,7 +13,7 @@ import QtQuick.Controls.Styles 1.4
 Item {
     id: panelIntrument
     width: 180
-    height: 300
+    height: 360
     anchors.left: parent.left
     anchors.leftMargin: 5
     anchors.verticalCenter: parent.verticalCenter

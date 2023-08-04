@@ -353,6 +353,24 @@ Window { // варіант де результат передається по �
         id: ticDialog
     }
 
+//        Window {
+//            id: resultsWindow
+//            title: "Результати"
+//            visible: true
+//            width: 400
+//            height: 500
 
+//            ListView {
+//                anchors.fill: parent
+//                model: bestMatchingPointsModel
+//                delegate: Text {
+//                    text: "Index: " + index +
+//                       "\nReference Point index: " + model.ref_point.idx +   " Reference Point: " + model.ref_point.lat + ", " + model.ref_point.lon +
+//                       "\nCandidate Point index: " + model.cand_point.idx +  " Candidate Point: " + model.cand_point.lat + ", " + model.cand_point.lon +
+//                       "\nMatched: " + (model.matched ? "Yes" : "No")
+//                    font.pixelSize: 16
+//                }
+//            }
+//        }
 }
 
