@@ -19,6 +19,10 @@ public:
 
     void sortedDataMathes(const std::vector<Match>& qmlMathes);
 
+    std::pair<double, double> solveSystem(double x1, double y1, double d1, double x2, double y2, double d2, double x3, double y3, double d3) ;// розвязування системи рівнять за допомогою методу Крамера (для знаходження своиїх коорлинат ).
+
+
+    std::pair<double, double> findMyLocation();
 
 signals:
 
