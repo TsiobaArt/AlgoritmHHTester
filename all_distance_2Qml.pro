@@ -8,6 +8,7 @@ QT += quick location sql
 SOURCES += \
         database.cpp \
         datafromdb.cpp \
+        findlocation.cpp \
         main.cpp \
         pointmatcher.cpp \
         referencemodel.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     aimuth_Vinc.h \
     database.h \
     datafromdb.h \
+    findlocation.h \
     names.h \
     pointmatcher.h \
     referencemodel.h \
