@@ -551,6 +551,34 @@ std::vector<Match> PointMatcher::_selectBestMatches(const std::vector<Match>& ma
     std::vector<Match> filtered_matchedDegree = _filterCandidatesByDegree(filtered_matches, grad_threshold); // додав фільтрацію по градусній мірі
 //    std::vector<Match> filtered_matchedDegree = _filterCandidatesByDegree(best_matches, grad_threshold); // додав фільтрацію по градусній мірі
 
+
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    for(const Match& match : filtered_matchedDegree) {
+        qDebug() << "ref_idx1: " << match.ref_idx1 ;
+        qDebug() << "ref_idx2: " << match.ref_idx2 ;
+        qDebug() << "cand_idx1: " << match.cand_idx1;
+        qDebug() << "cand_idx2: " << match.cand_idx2 ;
+        qDebug() << "distance_diff: " << match.distance_diff ;
+        qDebug() << "angle_diff: " << match.angle_diff;
+    }
+
+
+    std::map<size_t, int> ref_idx1_counts;
+    for(const Match& match : filtered_matchedDegree) {
+        ref_idx1_counts[match.ref_idx1]++;
+    }
+
+    for(const auto& pair : ref_idx1_counts) {
+        if(pair.second > 1) {
+            qDebug() << "ref_idx1: " << pair.first << " repeats " << pair.second << " times.";
+        }
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
 //    return filtered_matches;
     return filtered_matchedDegree;
 
