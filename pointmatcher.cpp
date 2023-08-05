@@ -52,7 +52,7 @@ QVariantList PointMatcher::findMatches(double distance_threshold, double angle_t
         }
     }
 
-    // Wait for all parallel tasks to finish
+    // очікуємо завершення
     for (auto &future : futures) {
         future.waitForFinished();
     }
@@ -63,7 +63,17 @@ QVariantList PointMatcher::findMatches(double distance_threshold, double angle_t
     QVariantList qmlMatches;
 
     // -------------- Тестую знаходження позиції
-    _findLocation(best_matches);
+//    _findLocation(best_matches);
+
+    FindLocation locationFinder;
+    std::pair<double, double> locationPair;
+    locationPair = locationFinder.sortedDataMatches(best_matches);
+    qDebug () << "LOCATION " << locationPair.first;
+    qDebug () << "LOCATION " << locationPair.second;
+
+     _latitudeCentalPoint = locationPair.first;
+     _longitudeCentalPoint = locationPair.second;
+
     // -------------- Тестую знаходження позиції
 
     for (const Match &match : best_matches  /*matches*/) {
@@ -267,7 +277,7 @@ void PointMatcher::downloadDataBaseTest(const double signalStrength, const doubl
 //        }
 //   // ------- первірка даних  про тіки та id
 
-//    // перевірка даних по приходу з бази дани
+    // перевірка даних по приходу з бази дани
 //    for (auto &value : _candidate_points ) {
 //        qDebug() << "start";
 //            qDebug() <<  " перевірка db dist"  <<value.dist;
@@ -320,87 +330,75 @@ double PointMatcher::latitudeCentalPoint() const
     return _latitudeCentalPoint;
 }
 
-void PointMatcher::_findLocation(const std::vector<Match>& qmlMatches)
-{
-   _allDataDb = dataFromDB->getAllData();
-   std::vector<Point> candidate;
-   std::set<int> uniqueIndexCandidate;
+//void PointMatcher::_findLocation(const std::vector<Match>& qmlMatches)
+//{
+//   _allDataDb = dataFromDB->getAllData();
+//   std::vector<Point> candidate;
+//   std::set<int> uniqueIndexCandidate;
 
-   candidate.clear();
-   for (const Match& match : qmlMatches) {
-       uniqueIndexCandidate.insert(match.ref_idx1);
-       uniqueIndexCandidate.insert(match.ref_idx2);
-   }
+//   candidate.clear();
+//   for (const Match& match : qmlMatches) {
+//       uniqueIndexCandidate.insert(match.ref_idx1);
+//       uniqueIndexCandidate.insert(match.ref_idx2);
+//   }
 
-   for (const auto &value :uniqueIndexCandidate ) {
-    candidate.push_back(_candidate_points[value]);
-   }
+//   for (const auto &value :uniqueIndexCandidate ) {
+//    candidate.push_back(_candidate_points[value]);
+//   }
 
-   std::vector<StructData> filteredDataDb;
+//   std::vector<StructData> filteredDataDb;
 
-      for (const StructData& dataPoint : _allDataDb) {
-          bool found = false;
-          for (const Point& candidatePoint : candidate) {
-              if (candidatePoint.lat == dataPoint.latitude && candidatePoint.lon == dataPoint.longitude) {
-                  found = true;
-                  break;
-              }
-          }
-          if (found) {
-              filteredDataDb.push_back(dataPoint);
-          }
-      }
-
-
-//      for (const StructData& data : _allDataDb) {
-//          qDebug() << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ start "  << data.latitude;
-//          qDebug() <<"data.AzimuthBearing " << data.AzimuthBearing;
-//          qDebug() <<"data.Distance " << data.Distance;
-//          qDebug() <<"data.Rcs " << data.Rcs;
-//          qDebug() <<"data.latitude " << data.latitude;
-//          qDebug() <<"data.longitude " << data.longitude;
-//          qDebug() << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ end "  ;
-
+//      for (const StructData& dataPoint : _allDataDb) {
+//          bool found = false;
+//          for (const Point& candidatePoint : candidate) {
+//              if (candidatePoint.lat == dataPoint.latitude && candidatePoint.lon == dataPoint.longitude) {
+//                  found = true;
+//                  break;
+//              }
+//          }
+//          if (found) {
+//              filteredDataDb.push_back(dataPoint);
+//          }
 //      }
 
-      _allDataDb = filteredDataDb;
-      findMyLocation();
+//      _allDataDb = filteredDataDb;
+//      findMyLocation();
 
-}
+//}
 
-std::pair<double, double> PointMatcher::solveSystem(double x1, double y1, double d1, double x2, double y2, double d2, double x3, double y3, double d3) // розвязування системи рівнять за допомогою методу Крамера (для знаходження своиїх коорлинат ).
-{
+//std::pair<double, double> PointMatcher::solveSystem(double x1, double y1, double d1, double x2, double y2, double d2, double x3, double y3, double d3) // розвязування системи рівнять за допомогою методу Крамера (для знаходження своиїх коорлинат ).
+//{
 
-      qDebug () <<   "x1:  " << x1;
-      qDebug () <<   "x2:  " << x2;
-      qDebug () <<   "x3:  " << x3;
+//      qDebug () <<   "x1:  " << x1;
+//      qDebug () <<   "x2:  " << x2;
+//      qDebug () <<   "x3:  " << x3;
 
-      qDebug () <<   "y1:  " << y1;
-      qDebug () <<   "y2:  " << y2;
-      qDebug () <<   "y3:  " << y3;
+//      qDebug () <<   "y1:  " << y1;
+//      qDebug () <<   "y2:  " << y2;
+//      qDebug () <<   "y3:  " << y3;
 
-      qDebug () <<   "d1:  " << d1;
-      qDebug () <<   "d2:  " << d2;
-      qDebug () <<   "d3:  " << d3;
+//      qDebug () <<   "d1:  " << d1;
+//      qDebug () <<   "d2:  " << d2;
+//      qDebug () <<   "d3:  " << d3;
 
 
-    double a1 = 2*(x2 - x1);
-    double b1 = 2*(y2 - y1);
-    double c1 = pow(d1, 2) - pow(d2, 2) - pow(x1, 2) + pow(x2, 2) - pow(y1, 2) + pow(y2, 2);
+//    double a1 = 2*(x2 - x1);
+//    double b1 = 2*(y2 - y1);
+//    double c1 = pow(d1, 2) - pow(d2, 2) - pow(x1, 2) + pow(x2, 2) - pow(y1, 2) + pow(y2, 2);
 
-    double a2 = 2*(x3 - x1);
-    double b2 = 2*(y3 - y1);
-    double c2 = pow(d1, 2) - pow(d3, 2) - pow(x1, 2) + pow(x3, 2) - pow(y1, 2) + pow(y3, 2);
+//    double a2 = 2*(x3 - x1);
+//    double b2 = 2*(y3 - y1);
+//    double c2 = pow(d1, 2) - pow(d3, 2) - pow(x1, 2) + pow(x3, 2) - pow(y1, 2) + pow(y3, 2);
 
-    double det = a1*b2 - a2*b1;
-    double x = (b2*c1 - b1*c2) / det;
-    double y = (a1*c2 - a2*c1) / det;
+//    double det = a1*b2 - a2*b1;
+//    double x = (b2*c1 - b1*c2) / det;
+//    double y = (a1*c2 - a2*c1) / det;
 
-    qDebug () <<   "x:  " << x;
-    qDebug () <<   "y:  " << y;
+//    qDebug () <<   "x:  " << x;
+//    qDebug () <<   "y:  " << y;
 
-    return {x, y};
-}
+//    return {x, y};
+//}
 
 //std::pair<double, double> PointMatcher::solveSystem(double x1, double y1, double d1, double x2, double y2, double d2, double x3, double y3, double d3) {
 //    double A = 2*x2 - 2*x1;
@@ -415,36 +413,39 @@ std::pair<double, double> PointMatcher::solveSystem(double x1, double y1, double
 //    return {x, y};
 //}
 
-void PointMatcher::findMyLocation()
-{
-    qDebug() << _allDataDb.size();
-    qDebug () << "allDataDb.size() " << _allDataDb.size();
-    if (_allDataDb.size() > 2) {
-          // Нам потрібно принаймні три точки для трілатерації
-      qDebug () <<  " _allDataDb.size() < 2 ";
+//void PointMatcher::findMyLocation()
+//{
+//    qDebug() << _allDataDb.size();
+//    qDebug () << "allDataDb.size() " << _allDataDb.size();
+//    if (_allDataDb.size() > 2) {
+//          // Нам потрібно принаймні три точки для трілатерації
+//      qDebug () <<  " _allDataDb.size() < 2 ";
 
-      // Використовуємо перші три точки в _allDataDb
-      // Ви можете використовувати інші точки або всі комбінації трьох точок для більш точного результату
-      auto point1 = _allDataDb[0];
-      auto point2 = _allDataDb[1];
-      auto point3 = _allDataDb[2];
+//      // Використовуємо перші три точки в _allDataDb
+//      // Ви можете використовувати інші точки або всі комбінації трьох точок для більш точного результату
+//      auto point1 = _allDataDb[0];
+//      auto point2 = _allDataDb[1];
+//      auto point3 = _allDataDb[2];
 
-      qDebug () <<  " point1.Distance " <<  point1.Distance;
-      qDebug () <<  " point2.Distance " <<  point2.Distance;
-      qDebug () <<  " point3.Distance " <<  point3.Distance;
+////      qDebug () <<  " point1.Distance " <<  point1.Distance;
+////      qDebug () <<  " point2.Distance " <<  point2.Distance;
+////      qDebug () <<  " point3.Distance " <<  point3.Distance;
+////      qDebug () <<  " point1.Rcs " <<  point1.Rcs;
+////      qDebug () <<  " point2.Rcs " <<  point2.Rcs;
+////      qDebug () <<  " point3.Rcs " <<  point3.Rcs;
 
 
-      // Обчислюємо наші координати
-      auto coordinates = solveSystem(point1.latitude, point1.longitude, point1.Distance, point2.latitude, point2.longitude, point2.Distance, point3.latitude, point3.longitude, point3.Distance);
+//      // Обчислюємо наші координати
+//      auto coordinates = solveSystem(point1.latitude, point1.longitude, point1.Distance, point2.latitude, point2.longitude, point2.Distance, point3.latitude, point3.longitude, point3.Distance);
 
-      // Повертаємо наше місцезнаходження
-      _latitudeCentalPoint = coordinates.first;
-      _longitudeCentalPoint = coordinates.second;
-      qDebug() << "findMyLocation latitude " << _latitudeCentalPoint;
-      qDebug() << "findMyLocation latitude " << _longitudeCentalPoint;
+//      // Повертаємо наше місцезнаходження
+//      _latitudeCentalPoint = coordinates.first;
+//      _longitudeCentalPoint = coordinates.second;
+//      qDebug() << "findMyLocation latitude " << _latitudeCentalPoint;
+//      qDebug() << "findMyLocation latitude " << _longitudeCentalPoint;
 
-    }
-}
+//    }
+//}
 
 //void PointMatcher::findMyLocation() { // усереднен значення
 //    int numPoints = _allDataDb.size();
@@ -505,37 +506,94 @@ std::vector<Point> PointMatcher::createShiftedPoints(const std::vector<Point> &r
 }
 
 
-void PointMatcher::_comparePoints(size_t i, size_t j, double distance_threshold, double angle_threshold, std::vector<Match>& matches) { // тепер приймає в градусах але в декартовій системі координат
+//void PointMatcher::_comparePoints(size_t i, size_t j, double distance_threshold, double angle_threshold, std::vector<Match>& matches) { // тепер приймає в градусах але в декартовій системі координат
+
+//    double ref_dist = _haversineDistance(_reference_points[i], _reference_points[j]);
+//    double ref_angle = _angle(_reference_points[i], _reference_points[j]);
+
+//    for (auto &value : _candidate_points) {
+//        qDebug() << " Перевірка даних value.Rcs" <<  value.Rcs;
+//        qDebug() << " Перевірка даних value.dist" <<  value.dist;
+//        qDebug() << " Перевірка даних value.lat" <<  value.lat;
+
+
+//    }
+
+//    for (size_t k = 0; k < _candidate_points.size(); ++k) {
+//        for (size_t l = 0; l < _candidate_points.size(); ++l) {
+//            if (k == l) continue; // Пропускаємо однакові точки
+
+//            double cand_dist = _haversineDistance(_candidate_points[k], _candidate_points[l]);
+//            double cand_angle = _angle(_candidate_points[k], _candidate_points[l]);
+
+
+//            if (std::abs(ref_dist - cand_dist) <= distance_threshold &&
+//                    std::abs(ref_angle - cand_angle) <= angle_threshold) {
+
+
+//                Match match = {i, j, k, l, std::abs(ref_dist - cand_dist), std::abs(ref_angle - cand_angle)};
+//                {
+//                    QMutexLocker locker(&_matches_mutex);
+//                    matches.push_back(match);
+//                }
+//            }
+//        }
+//    }
+//}
+
+void PointMatcher::_comparePoints(size_t i, size_t j, double distance_threshold, double angle_threshold, std::vector<Match>& matches) { // заповнюю зразу всі поля
 
     double ref_dist = _haversineDistance(_reference_points[i], _reference_points[j]);
     double ref_angle = _angle(_reference_points[i], _reference_points[j]);
 
-    for (auto &value : _reference_points) {
-        qDebug() << " Перевірка даних value.Rcs" <<  value.Rcs;
-        qDebug() << " Перевірка даних value.dist" <<  value.dist;
-        qDebug() << " Перевірка даних value.lat" <<  value.lat;
-
-
-    }
+//    for (auto &value : _candidate_points) {
+//        qDebug() << " Перевірка даних value.Rcs" <<  value.Rcs;
+//                qDebug() << " Перевірка даних value.dist" <<  value.dist;
+//            qDebug() << " Перевірка даних value.lat" <<  value.lat;
+//    }
 
     for (size_t k = 0; k < _candidate_points.size(); ++k) {
         for (size_t l = 0; l < _candidate_points.size(); ++l) {
-            if (k == l) continue; // Пропускаємо однакові точки
+              if (k == l) continue; // Пропускаємо однакові точки
 
-            double cand_dist = _haversineDistance(_candidate_points[k], _candidate_points[l]);
-            double cand_angle = _angle(_candidate_points[k], _candidate_points[l]);
-
-
-            if (std::abs(ref_dist - cand_dist) <= distance_threshold &&
-                    std::abs(ref_angle - cand_angle) <= angle_threshold) {
+              double cand_dist = _haversineDistance(_candidate_points[k], _candidate_points[l]);
+              double cand_angle = _angle(_candidate_points[k], _candidate_points[l]);
 
 
-                Match match = {i, j, k, l, std::abs(ref_dist - cand_dist), std::abs(ref_angle - cand_angle)};
-                {
-                    QMutexLocker locker(&_matches_mutex);
-                    matches.push_back(match);
-                }
-            }
+              if (std::abs(ref_dist - cand_dist) <= distance_threshold &&
+                  std::abs(ref_angle - cand_angle) <= angle_threshold) {
+
+                  Match match;
+                  match.ref_idx1 = i;
+                  match.ref_idx2 = j;
+                  match.cand_idx1 = k;
+                  match.cand_idx2 = l;
+                  match.distance_diff = std::abs(ref_dist - cand_dist);
+                  match.angle_diff = std::abs(ref_angle - cand_angle);
+
+
+                  match.cand_idx1_lat = _candidate_points[k].lat;
+                  match.cand_idx1_lon = _candidate_points[k].lon;
+                  match.cand_idx1_Dist = _candidate_points[k].dist;
+                  match.cand_idx1_AzimuthBearing = _candidate_points[k].AzimuthBearing;
+                  match.cand_idx1_Rcs = _candidate_points[k].Rcs;
+                  match.cand_idx1_bearing = _candidate_points[k].bearing;
+
+
+                  match.cand_idx2_lat = _candidate_points[l].lat;
+                  match.cand_idx2_lon = _candidate_points[l].lon;
+                  match.cand_idx2_Dist = _candidate_points[l].dist;
+                  match.cand_idx2_AzimuthBearing = _candidate_points[l].AzimuthBearing;
+                  match.cand_idx2_Rcs = _candidate_points[l].Rcs;
+                  match.cand_idx2_bearing = _candidate_points[l].bearing;
+
+
+                  {
+                      QMutexLocker locker(&_matches_mutex);
+                      matches.push_back(match);
+                  }
+              }
+
         }
     }
 }
@@ -673,19 +731,12 @@ std::vector<Match> PointMatcher::_selectBestMatches(const std::vector<Match>& ma
     for (const Match& match : matches) {
         auto it = best_matches_map.find(match.ref_idx1);
 
-//        if (it == best_matches_map.end() || match.distance_diff + match.angle_diff < it->second.distance_diff + it->second.angle_diff) { // філтрація по різниці сум дистанці та кута
-//            best_matches_map[match.ref_idx1] = match;
-//        }
-        if (it == best_matches_map.end() || match.distance_diff < it->second.distance_diff) { // тільки по дистанції
+        if (it == best_matches_map.end() || match.distance_diff + match.angle_diff < it->second.distance_diff + it->second.angle_diff) { // філтрація по різниці сум дистанці та кута
             best_matches_map[match.ref_idx1] = match;
         }
-
-        qDebug() << "Перевірка на наявністть даних cand_idx1_Rcs  " << match.cand_idx1_Rcs;
-        qDebug() << "Перевірка на наявністть даних cand_idx2_SignalStrength " << match.cand_idx2_SignalStrength;
-
-            qDebug() << "Перевірка на наявністть даних ref_idx1_Rcs " << match.ref_idx1_Rcs;
-        qDebug() << "Перевірка на наявністть даних cand_idx2_SignalStrength " << match.cand_idx2_SignalStrength;
-
+//        if (it == best_matches_map.end() || match.distance_diff < it->second.distance_diff) { // тільки по дистанції
+//            best_matches_map[match.ref_idx1] = match;
+//        }
     }
 
     std::vector<Match> best_matches;
@@ -694,21 +745,11 @@ std::vector<Match> PointMatcher::_selectBestMatches(const std::vector<Match>& ma
     }
 
     double radius_multiplier = 1.9;
+
+
     std::vector<Match> filtered_matches = _filterCandidatesByRadius(best_matches, _reference_points, radius_multiplier);
 
     std::vector<Match> filtered_matchedDegree = _filterCandidatesByDegree(filtered_matches, grad_threshold);
-
-
-
-//    // ------  фільтрація даних  щоб знайти найкращі спавпадіння якщо до однієї  точки привзяані декілтка
-//    for(const Match& match : filtered_matchedDegree) {
-//        qDebug() << "ref_idx1: " << match.ref_idx1 ;
-//        qDebug() << "ref_idx2: " << match.ref_idx2 ;
-//        qDebug() << "cand_idx1: " << match.cand_idx1;
-//        qDebug() << "cand_idx2: " << match.cand_idx2 ;
-//        qDebug() << "distance_diff: " << match.distance_diff ;
-//        qDebug() << "angle_diff: " << match.angle_diff;
-//    }
 
     std::map<size_t, int> ref_idx1_counts;
     for(const Match& match : filtered_matchedDegree) {
@@ -723,6 +764,8 @@ std::vector<Match> PointMatcher::_selectBestMatches(const std::vector<Match>& ma
     // ------  фільтрація даних  щоб знайти найкращі спавпадіння якщо до однієї  точки привзяані декілтка
 
     return filtered_matchedDegree;
+
+
 }
 Point PointMatcher::_computeCentroid(const std::vector<Point>& points) const {
     double sum_lat = 0;

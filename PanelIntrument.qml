@@ -498,6 +498,9 @@ Item {
                                     var latitudeCalc =  pointMatcher.latitudeCentalPoint();
                                     var longitudeCalc = pointMatcher.longitudeCentalPoint();
 
+                                    console.log ("latitudeCalc " , latitudeCalc);
+                                    console.log ("longitudeCalc " , longitudeCalc);
+
                                     centralPoint.coordinate.latitude = latitudeCalc;
                                     centralPoint.coordinate.longitude = longitudeCalc;
                                     infoMenuCoordinateCentalPoint.latitudeС = latitudeCalc;

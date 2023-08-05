@@ -17,6 +17,8 @@ struct StructData {
 //        int Speed;
     double latitude;
     double longitude;
+    double bearing;
+
 };
 
 struct Point {
@@ -25,6 +27,7 @@ struct Point {
     double dist; //  критерій для пошуку співпадінь
     int Rcs;
     double AzimuthBearing;
+    double bearing;
 
 
 
@@ -65,6 +68,8 @@ struct Match {
     double cand_idx1_AzimuthBearing;
     int cand_idx1_Rcs;
     double cand_idx1_SignalStrength;
+    double cand_idx1_bearing;
+
 
 
 
@@ -74,6 +79,8 @@ struct Match {
     double cand_idx2_AzimuthBearing;
     int cand_idx2_Rcs;
     double cand_idx2_SignalStrength;
+    double cand_idx2_bearing;
+
 
 
     // ---------------------------- додав нові поля для пошуку співпадінь

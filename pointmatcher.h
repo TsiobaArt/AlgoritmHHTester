@@ -14,6 +14,8 @@
 #include "StructData.h"
 #include "datafromdb.h"
 #include <QGeoCoordinate>
+#include "findlocation.h"
+
 
 class PointMatcher : public QObject {
 

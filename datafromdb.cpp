@@ -97,7 +97,7 @@ void DataFromDB::loadData(const QString &table, const double rcsRange, const dou
 
     double headLatitude = 0.0;
     double headLongitude = 0.0;
-
+    double bearing = 0.0;
     // Починаємо цикл для кожного запису, отриманого в результаті запиту
     while (query.next()) {
         // Отримуємо дані у вигляді JSON рядка
@@ -116,6 +116,7 @@ void DataFromDB::loadData(const QString &table, const double rcsRange, const dou
                 QJsonArray listArray = jsonObject.value("list").toArray();
                 headLatitude = value["headLatitude"].toDouble();
                 headLongitude = value["headLongitude"].toDouble();
+                bearing = value["bearing"].toDouble();
                 // Перебираємо кожен об'єкт в масиві "list"
                 for (const QJsonValue& itemValue : qAsConst(listArray)) {
                     QJsonObject item = itemValue.toObject();
@@ -126,7 +127,7 @@ void DataFromDB::loadData(const QString &table, const double rcsRange, const dou
                     double latitude =  item.value("latitude").toDouble();
                     int rcsFilter = item.value("Rcs").toInt();
                     double longitude = item.value("longitude").toDouble();
-                    int distance = item.value("Distance").toDouble();
+                    double distance = item.value("Distance").toDouble();
                     double azimuthBearing = item.value("AzimuthBearing").toDouble();
 
                     // Створюємо об'єкт StructData та додаємо його до вектора
@@ -136,7 +137,7 @@ void DataFromDB::loadData(const QString &table, const double rcsRange, const dou
                     data.Rcs       = rcsFilter;
                     data.Distance  = distance;
                     data.AzimuthBearing = azimuthBearing;
-
+                    data.bearing = bearing;
                     dataList.append(data);
 
                     // Створюємо точку з отриманими координатами
@@ -146,6 +147,7 @@ void DataFromDB::loadData(const QString &table, const double rcsRange, const dou
                     point.dist = distance;
                     point.Rcs = rcsFilter;
                     point.AzimuthBearing = azimuthBearing;
+                    point.bearing = bearing;
 
                     // Якщо значення rcsFilter і signalStrength вищі за вказані пороги,
                     // то додаємо створену точку та дані до відповідних векторів

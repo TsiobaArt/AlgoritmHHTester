@@ -86,6 +86,13 @@ Window { // варіант де результат передається по �
                                                matched: true
                                            });
         }
+        var latitudeCalc =  pointMatcher.latitudeCentalPoint();
+        var longitudeCalc = pointMatcher.longitudeCentalPoint();
+
+        centralPoint.coordinate.latitude = latitudeCalc;
+        centralPoint.coordinate.longitude = longitudeCalc;
+        infoMenuCoordinateCentalPoint.latitudeС = latitudeCalc;
+        infoMenuCoordinateCentalPoint.longitudeС = longitudeCalc;
     }
 
     function pointToGeoCoordinate(point) {
