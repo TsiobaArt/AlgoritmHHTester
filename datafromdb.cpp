@@ -124,9 +124,9 @@ void DataFromDB::loadData(const QString &table, const double rcsRange, const dou
                     // Отримуємо значення полів об'єкта "list"
                     double signalStrength = item.value("SignalStrength").toDouble();
                     double latitude =  item.value("latitude").toDouble();
-                    double rcsFilter = item.value("Rcs").toDouble();
+                    int rcsFilter = item.value("Rcs").toInt();
                     double longitude = item.value("longitude").toDouble();
-                    double distance = item.value("Distance").toDouble();
+                    int distance = item.value("Distance").toDouble();
                     double azimuthBearing = item.value("AzimuthBearing").toDouble();
 
                     // Створюємо об'єкт StructData та додаємо його до вектора

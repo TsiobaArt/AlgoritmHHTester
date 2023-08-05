@@ -12,7 +12,7 @@ struct StructData {
     double AzimuthBearing;
     int Distance;
 //    int PlaceBearing;
-    int Rcs;
+    int  Rcs;
 //    int SignalStrength;
 //        int Speed;
     double latitude;
@@ -47,7 +47,7 @@ struct Match {
     double ref_idx1_lot;
     double ref_idx1_Dist;
     double ref_idx1_AzimuthBearing;
-    double ref_idx1_Rcs;
+    int ref_idx1_Rcs;
     double ref_idx1_SignalStrength;
 
 
@@ -55,7 +55,7 @@ struct Match {
     double ref_idx2_lot;
     double ref_idx2_Dist;
     double ref_idx2_AzimuthBearing;
-    double ref_idx2_Rcs;
+    int ref_idx2_Rcs;
     double ref_idx2_SignalStrength;
 
 
@@ -63,7 +63,7 @@ struct Match {
     double cand_idx1_lon;
     double cand_idx1_Dist;
     double cand_idx1_AzimuthBearing;
-    double cand_idx1_Rcs;
+    int cand_idx1_Rcs;
     double cand_idx1_SignalStrength;
 
 
@@ -72,7 +72,7 @@ struct Match {
     double cand_idx2_lon;
     double cand_idx2_Dist;
     double cand_idx2_AzimuthBearing;
-    double cand_idx2_Rcs;
+    int cand_idx2_Rcs;
     double cand_idx2_SignalStrength;
 
 

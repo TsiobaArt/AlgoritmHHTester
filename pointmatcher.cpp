@@ -57,7 +57,6 @@ QVariantList PointMatcher::findMatches(double distance_threshold, double angle_t
         future.waitForFinished();
     }
 
-
     std::vector<Match> best_matches = _selectBestMatches(matches, grad_threshold);
     std::map<size_t, std::vector<std::pair<size_t, Point>>> grouped_matches = _groupMatches(best_matches);
 
@@ -267,6 +266,20 @@ void PointMatcher::downloadDataBaseTest(const double signalStrength, const doubl
 //            qDebug() << "Key: " << i.key() << ", Value: " << i.value();
 //        }
 //   // ------- первірка даних  про тіки та id
+
+//    // перевірка даних по приходу з бази дани
+//    for (auto &value : _candidate_points ) {
+//        qDebug() << "start";
+//            qDebug() <<  " перевірка db dist"  <<value.dist;
+//            qDebug() <<  " перевірка db Rcs"  <<value.Rcs;
+//            qDebug() <<  " перевірка db lat"  <<value.lat;
+//        qDebug() << "end";
+
+
+
+//    }
+//    // перевірка даних по приходу з бази дани
+
 }
 
 void PointMatcher::downloadDBTecAndId(const QString nameTable)
@@ -497,6 +510,14 @@ void PointMatcher::_comparePoints(size_t i, size_t j, double distance_threshold,
     double ref_dist = _haversineDistance(_reference_points[i], _reference_points[j]);
     double ref_angle = _angle(_reference_points[i], _reference_points[j]);
 
+    for (auto &value : _reference_points) {
+        qDebug() << " Перевірка даних value.Rcs" <<  value.Rcs;
+        qDebug() << " Перевірка даних value.dist" <<  value.dist;
+        qDebug() << " Перевірка даних value.lat" <<  value.lat;
+
+
+    }
+
     for (size_t k = 0; k < _candidate_points.size(); ++k) {
         for (size_t l = 0; l < _candidate_points.size(); ++l) {
             if (k == l) continue; // Пропускаємо однакові точки
@@ -658,6 +679,13 @@ std::vector<Match> PointMatcher::_selectBestMatches(const std::vector<Match>& ma
         if (it == best_matches_map.end() || match.distance_diff < it->second.distance_diff) { // тільки по дистанції
             best_matches_map[match.ref_idx1] = match;
         }
+
+        qDebug() << "Перевірка на наявністть даних cand_idx1_Rcs  " << match.cand_idx1_Rcs;
+        qDebug() << "Перевірка на наявністть даних cand_idx2_SignalStrength " << match.cand_idx2_SignalStrength;
+
+            qDebug() << "Перевірка на наявністть даних ref_idx1_Rcs " << match.ref_idx1_Rcs;
+        qDebug() << "Перевірка на наявністть даних cand_idx2_SignalStrength " << match.cand_idx2_SignalStrength;
+
     }
 
     std::vector<Match> best_matches;
@@ -689,7 +717,7 @@ std::vector<Match> PointMatcher::_selectBestMatches(const std::vector<Match>& ma
 
     for(const auto& pair : ref_idx1_counts) {
         if(pair.second > 1) {
-//            qDebug() << "ref_idx1: " << pair.first << " repeats " << pair.second << " times.";
+            qDebug() << "ref_idx1: " << pair.first << " repeats " << pair.second << " times.";
         }
     }
     // ------  фільтрація даних  щоб знайти найкращі спавпадіння якщо до однієї  точки привзяані декілтка
@@ -843,10 +871,10 @@ std::map<size_t, std::vector<std::pair<size_t, Point>>> PointMatcher::_groupMatc
 
     for (const auto& [ref_idx, candidates] : grouped_matches) {
         Point ref_point = _reference_points[ref_idx];
-//        qDebug() << "Reference point " << ref_idx << " (" << ref_point.lat << ", " << ref_point.lon << ") matches:";
+        qDebug() << "Reference point " << ref_idx << " (" << ref_point.lat << ", " << ref_point.lon << ") matches:";
 
         for (const auto& [cand_idx, cand_point] : candidates) {
-//            qDebug() << "  Candidate point " << cand_idx << " (" << cand_point.lat << ", " << cand_point.lon << ")";
+            qDebug() << "  Candidate point " << cand_idx << " (" << cand_point.lat << ", " << cand_point.lon << ")";
         }
     }
     return grouped_matches;
