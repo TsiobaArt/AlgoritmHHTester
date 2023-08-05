@@ -103,6 +103,7 @@ Popup {
                         onClicked: {
                             listView.selectedIndex = index; // Встановлюємо індекс обраного елемента
                             panelIntrument.uploadTestDataBase.customComboBox.currentText = tableName
+
                             pointMatcher.downloadDBTecAndId(tableName)
                             panelIntrument.uploadTestDataBase.tickModel.clear()
                             var dataTic = pointMatcher.getMapTicAndId()

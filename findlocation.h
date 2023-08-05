@@ -24,6 +24,9 @@ public:
 
     std::pair<double, double> findMyLocation();
 
+    std::vector<StructData> allDataDb;
+
+
 signals:
 
 };

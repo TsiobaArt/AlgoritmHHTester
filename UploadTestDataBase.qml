@@ -233,8 +233,8 @@ Rectangle {
                         previousPointsModel.clear()
 
                         convertModelToPoints(referenceModel)
-                        pointMatcher.convertQVariantListToPoints (convertModelToPoints(referenceModel));
-                        pointMatcher.downloadDataBaseTest(poinSignalStrength.text, pointRcs.text,customComboBox.currentText,panelIntrument.uploadTestDataBase.selectIdTick)
+                        pointMatcher.convertQVariantListToPoints (convertModelToPoints(referenceModel));                        
+                        pointMatcher.downloadDataBaseTest(poinSignalStrength.text, pointRcs.text,customComboBox.currentText,panelIntrument.uploadTestDataBase.selectIdTick) // внесу зміни для швидкого завантаження
                         referencePointsModel = pointMatcher.getReferencePoints()
                         dataPointsModel      = pointMatcher.getCandidatePoints()
 

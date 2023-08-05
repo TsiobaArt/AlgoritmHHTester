@@ -143,6 +143,9 @@ void DataFromDB::loadData(const QString &table, const double rcsRange, const dou
                     Point point;
                     point.lat = latitude;
                     point.lon = longitude;
+                    point.dist = distance;
+                    point.Rcs = rcsFilter;
+                    point.AzimuthBearing = azimuthBearing;
 
                     // Якщо значення rcsFilter і signalStrength вищі за вказані пороги,
                     // то додаємо створену точку та дані до відповідних векторів

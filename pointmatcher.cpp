@@ -253,7 +253,10 @@ void PointMatcher::downloadDataBaseTest(const double signalStrength, const doubl
 {
 
 //    _reference_points.clear();
-    dataFromDB->loadData(nameTable,rcs,signalStrength, tickNumber);
+    QString nameTable2 = "session_26_07_15_48_45"; //
+    dataFromDB->loadData(nameTable2,rcs,signalStrength, tickNumber); // для швидкого тесту
+
+//    dataFromDB->loadData(nameTable,rcs,signalStrength, tickNumber);
     _candidate_points = dataFromDB->getCoordinates();
     mapTicAndId = dataFromDB->dataTicAndId;
 
@@ -265,6 +268,16 @@ void PointMatcher::downloadDataBaseTest(const double signalStrength, const doubl
 //        }
 //   // ------- первірка даних  про тіки та id
 }
+
+void PointMatcher::downloadDBTecAndId(const QString nameTable)
+{
+    QString nameTable2 = "session_26_07_15_48_45"; // для швидкого тесту
+    mapTicAndId = dataFromDB->readTicCountAndId(nameTable2);
+
+//    mapTicAndId = dataFromDB->readTicCountAndId(nameTable);
+
+}
+
 
 void PointMatcher::processingDataDB(const double rcs, const double distance, const double azimuthBearning)
 {
@@ -288,10 +301,6 @@ QVariantMap PointMatcher::getMapTicAndId()
     return mapTicAndId;
 }
 
-void PointMatcher::downloadDBTecAndId(const QString nameTable)
-{
-    mapTicAndId = dataFromDB->readTicCountAndId(nameTable);
-}
 
 double PointMatcher::latitudeCentalPoint() const
 {
@@ -330,17 +339,16 @@ void PointMatcher::_findLocation(const std::vector<Match>& qmlMatches)
       }
 
 
-      for (const StructData& data : _allDataDb) {
-          qDebug() << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ start "  << data.latitude;
-          qDebug() <<"data.AzimuthBearing " << data.AzimuthBearing;
-          qDebug() <<"data.Distance " << data.Distance;
-          qDebug() <<"data.Rcs " << data.Rcs;
-          qDebug() <<"data.latitude " << data.latitude;
-          qDebug() <<"data.longitude " << data.longitude;
-          qDebug() << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ end "  ;
+//      for (const StructData& data : _allDataDb) {
+//          qDebug() << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ start "  << data.latitude;
+//          qDebug() <<"data.AzimuthBearing " << data.AzimuthBearing;
+//          qDebug() <<"data.Distance " << data.Distance;
+//          qDebug() <<"data.Rcs " << data.Rcs;
+//          qDebug() <<"data.latitude " << data.latitude;
+//          qDebug() <<"data.longitude " << data.longitude;
+//          qDebug() << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ end "  ;
 
-
-      }
+//      }
 
       _allDataDb = filteredDataDb;
       findMyLocation();
