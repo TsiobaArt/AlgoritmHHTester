@@ -120,41 +120,48 @@ std::pair<double, double> FindLocation::solveSystem(double x1, double y1, double
 ////        return {0, 0}; // Return default coordinates if there aren't enough matches
 //        //    }
 //}
-//std::pair<double, double> FindLocation::findMyLocation() {
-//    qDebug () <<  "FindLocation_ allMatches.size(); "  << _allMatches.size();
-//    if (_allMatches.size() >= 2) {
-//      double totalLat = 0.0;
-//      double totalLon = 0.0;
+std::pair<double, double> FindLocation::findMyLocation() {
+    qDebug () <<  "FindLocation_ allMatches.size(); "  << _allMatches.size();
+    if (_allMatches.size() >= 2) {
+      double totalLat = 0.0;
+      double totalLon = 0.0;
 
-//      for (auto& point : _allMatches) {
-//          QGeoCoordinate coord(point.cand_idx1_lat, point.cand_idx1_lon);
-//          double dist = point.cand_idx1_Dist;
-//          double azimuthAzimuthBearing = point.cand_idx1_AzimuthBearing;
-//          double bearing = point.cand_idx1_bearing;
-
-//          // Get the new coordinates at the specified distance and azimuth
-//          QGeoCoordinate newCoord = coord.atDistanceAndAzimuth(dist, azimuthAzimuthBearing + bearing);
-
-//          // Accumulate latitudes and longitudes
-//          totalLat += newCoord.latitude();
-//          totalLon += newCoord.longitude();
-
-//      }
+      for (auto& point : _allMatches) {
+          QGeoCoordinate coord(point.cand_idx1_lat, point.cand_idx1_lon);
+          double dist = point.cand_idx1_Dist;
+          double azimuthAzimuthBearing = point.cand_idx1_AzimuthBearing;
+          double bearing = point.cand_idx1_bearing;
 
 
+          double sumAzimuth = azimuthAzimuthBearing + bearing;
+          double reverseAzimuth = sumAzimuth + 180.0;
+          if (reverseAzimuth >= 360.0) {
+              reverseAzimuth -= 360.0;
+          }
 
-//      // Calculate the average latitude and longitude
-//      double avgLat = totalLat / _allMatches.size();
-//      double avgLon = totalLon / _allMatches.size();
+          // Get the new coordinates at the specified distance and azimuth
+          QGeoCoordinate newCoord = coord.atDistanceAndAzimuth(dist, reverseAzimuth);
 
-//      qDebug() <<  "avgLat " << avgLat;
-//      qDebug() <<  "avgLon " << avgLon;
+          // Accumulate latitudes and longitudes
+          totalLat += newCoord.latitude();
+          totalLon += newCoord.longitude();
 
-//      return {avgLat, avgLon};
-//    } else {
-//      return {0, 0}; // Return default coordinates if there aren't enough matches
-//    }
-//}
+      }
+
+
+
+      // Calculate the average latitude and longitude
+      double avgLat = totalLat / _allMatches.size();
+      double avgLon = totalLon / _allMatches.size();
+
+      qDebug() <<  "avgLat " << avgLat;
+      qDebug() <<  "avgLon " << avgLon;
+
+      return {avgLat, avgLon};
+    } else {
+      return {0, 0}; // Return default coordinates if there aren't enough matches
+    }
+}
 
 
 //std::pair<double, double> FindLocation::findMyLocation() {
@@ -203,54 +210,54 @@ std::pair<double, double> FindLocation::solveSystem(double x1, double y1, double
 //}
 
 
-std::pair<double, double> FindLocation::findMyLocation()
-{
-    // Set coordinates manually
-    QGeoCoordinate coord1(48.52014269118956, 24.4611438434119);
-    QGeoCoordinate coord2(48.50626180537989, 24.4771927081015);
-    QGeoCoordinate coord3(48.502215407637294, 24.4723471243014);
+//std::pair<double, double> FindLocation::findMyLocation()
+//{
+//    // Set coordinates manually
+//    QGeoCoordinate coord1(48.52014269118956, 24.4611438434119);
+//    QGeoCoordinate coord2(48.50626180537989, 24.4771927081015);
+//    QGeoCoordinate coord3(48.502215407637294, 24.4723471243014);
 
-    // Set center coordinate manually
-    QGeoCoordinate coordCentr(48.4841690063477, 24.4669399261475);
+//    // Set center coordinate manually
+//    QGeoCoordinate coordCentr(48.4841690063477, 24.4669399261475);
 
-    // Compute distances from the center to each point (in meters)
-    double dist1 = coord1.distanceTo(coordCentr);
-    double dist2 = coord2.distanceTo(coordCentr);
-    double dist3 = coord3.distanceTo(coordCentr);
+//    // Compute distances from the center to each point (in meters)
+//    double dist1 = coord1.distanceTo(coordCentr);
+//    double dist2 = coord2.distanceTo(coordCentr);
+//    double dist3 = coord3.distanceTo(coordCentr);
 
-    // Calculate the azimuth to each point
-    double azimuth1 = coord1.azimuthTo(coordCentr);
-    double azimuth2 = coord2.azimuthTo(coordCentr);
-    double azimuth3 = coord3.azimuthTo(coordCentr);
+//    // Calculate the azimuth to each point
+//    double azimuth1 = coord1.azimuthTo(coordCentr);
+//    double azimuth2 = coord2.azimuthTo(coordCentr);
+//    double azimuth3 = coord3.azimuthTo(coordCentr);
 
-    double azimuth11 = coordCentr.azimuthTo(coord1);
-    double azimuth22 = coordCentr.azimuthTo(coord2);
-    double azimuth33 = coordCentr.azimuthTo(coord3);
+//    double azimuth11 = coordCentr.azimuthTo(coord1);
+//    double azimuth22 = coordCentr.azimuthTo(coord2);
+//    double azimuth33 = coordCentr.azimuthTo(coord3);
 
-    qDebug () << "azimuth1 " << azimuth1;
-    qDebug () << "azimuth2 " << azimuth2;
-    qDebug () << "azimuth3 " << azimuth3;
+//    qDebug () << "azimuth1 " << azimuth1;
+//    qDebug () << "azimuth2 " << azimuth2;
+//    qDebug () << "azimuth3 " << azimuth3;
 
 
-    qDebug () << "azimuth11 " << azimuth11;
-    qDebug () << "azimuth22 " << azimuth22;
-    qDebug () << "azimuth33 " << azimuth33;
+//    qDebug () << "azimuth11 " << azimuth11;
+//    qDebug () << "azimuth22 " << azimuth22;
+//    qDebug () << "azimuth33 " << azimuth33;
 
-    // Get the new coordinates at the specified distance and azimuth
-    QGeoCoordinate newCoord1 = coord1.atDistanceAndAzimuth(dist1, azimuth1);
-    QGeoCoordinate newCoord2 = coord2.atDistanceAndAzimuth(dist2, azimuth2);
-    QGeoCoordinate newCoord3 = coord3.atDistanceAndAzimuth(dist3, azimuth3);
+//    // Get the new coordinates at the specified distance and azimuth
+//    QGeoCoordinate newCoord1 = coord1.atDistanceAndAzimuth(dist1, azimuth1);
+//    QGeoCoordinate newCoord2 = coord2.atDistanceAndAzimuth(dist2, azimuth2);
+//    QGeoCoordinate newCoord3 = coord3.atDistanceAndAzimuth(dist3, azimuth3);
 
-    // Calculate the average latitude and longitude
-    double avgLat = (newCoord1.latitude() + newCoord2.latitude() + newCoord3.latitude()) / 3.0;
-    double avgLon = (newCoord1.longitude() + newCoord2.longitude() + newCoord3.longitude()) / 3.0;
+//    // Calculate the average latitude and longitude
+//    double avgLat = (newCoord1.latitude() + newCoord2.latitude() + newCoord3.latitude()) / 3.0;
+//    double avgLon = (newCoord1.longitude() + newCoord2.longitude() + newCoord3.longitude()) / 3.0;
 
-//    double avgLat = newCoord1.latitude() ;
-//    double avgLon = newCoord1.longitude() ;
-    qDebug() <<  "avgLat " << avgLat;
-    qDebug() <<  "avgLon " << avgLon;
+////    double avgLat = newCoord1.latitude() ;
+////    double avgLon = newCoord1.longitude() ;
+//    qDebug() <<  "avgLat " << avgLat;
+//    qDebug() <<  "avgLon " << avgLon;
 
-    return {avgLat, avgLon};
-}
+//    return {avgLat, avgLon};
+//}
 
 
