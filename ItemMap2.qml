@@ -12,6 +12,8 @@ Item {
     width: parent.width / 2
     height: parent.height
     property alias dataMap: dataMap
+    property alias referencePointFromDb: referencePointFromDb
+    property alias  centralPoint: centralPoint
 
     Map {
         id: dataMap
@@ -29,7 +31,31 @@ Item {
         InfoRecMarker {
             id: infoRecMarker
         }
+        // -- filter Data
+        MapItemView {
+            id: referencePointFromDb
+            model: referenceModel
+            delegate: MapQuickItem {
+                coordinate: QtPositioning.coordinate(model.latitude, model.longitude)
+                anchorPoint.x: matchedMarkerImage.width * 0.5
+                anchorPoint.y: matchedMarkerImage.height * 0.5
 
+                sourceItem: Image {
+                    id: matchedMarkerImage
+                    source: "qrc:/icon/cross.svg"
+                    width: 35
+                    height: 35
+
+                }
+                ColorOverlay {
+                anchors.fill: parent
+                source: matchedMarkerImage
+                smooth: true
+                color:"green"
+                }
+
+            }
+        }
         Rectangle {
             color: "#646060"
             width: 35
@@ -137,6 +163,30 @@ Item {
                     anchors.fill: imageCentralPoint2
                     source: imageCentralPoint2
                     color: "red"
+                }
+            }
+        }
+        MapQuickItem {
+            id: centralPoint
+            anchorPoint.x: cross.width / 2
+            anchorPoint.y: cross.height / 2
+            sourceItem: Item {
+                id: cross
+                width: 36
+                height: 36
+                Canvas {
+                    anchors.fill: parent
+                    onPaint: {
+                        var ctx = getContext('2d');
+                        ctx.strokeStyle = "blue";
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        ctx.moveTo(0, 0);
+                        ctx.lineTo(parent.width, parent.height);
+                        ctx.moveTo(parent.width, 0);
+                        ctx.lineTo(0, parent.height);
+                        ctx.stroke();
+                    }
                 }
             }
         }

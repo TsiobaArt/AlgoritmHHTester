@@ -297,6 +297,7 @@ Item {
                         dataPointsModel = []
                         bestMatchingPointsModel.clear()
                         previousPointsModel.clear()
+
                     }
                 }
             }

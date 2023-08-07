@@ -93,6 +93,9 @@ Window { // варіант де результат передається по �
         centralPoint.coordinate.longitude = longitudeCalc;
         infoMenuCoordinateCentalPoint.latitudeС = latitudeCalc;
         infoMenuCoordinateCentalPoint.longitudeС = longitudeCalc;
+        itemMap2.centralPoint.coordinate.latitude = latitudeCalc
+        itemMap2.centralPoint.coordinate.longitude = longitudeCalc
+
     }
 
     function pointToGeoCoordinate(point) {
@@ -263,7 +266,7 @@ Window { // варіант де результат передається по �
                             anchors.fill: parent
                             onPaint: {
                                 var ctx = getContext('2d');
-                                ctx.strokeStyle = Qt.rgba(1, 0, 0, 1);
+                                ctx.strokeStyle = "blue";
                                 ctx.lineWidth = 2;
                                 ctx.beginPath();
                                 ctx.moveTo(0, 0);

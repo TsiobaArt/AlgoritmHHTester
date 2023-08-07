@@ -731,12 +731,12 @@ std::vector<Match> PointMatcher::_selectBestMatches(const std::vector<Match>& ma
     for (const Match& match : matches) {
         auto it = best_matches_map.find(match.ref_idx1);
 
-//        if (it == best_matches_map.end() || match.distance_diff + match.angle_diff < it->second.distance_diff + it->second.angle_diff) { // філтрація по різниці сум дистанці та кута
-//            best_matches_map[match.ref_idx1] = match;
-//        }
-        if (it == best_matches_map.end() || match.distance_diff < it->second.distance_diff) { // тільки по дистанції
+        if (it == best_matches_map.end() || match.distance_diff + match.angle_diff < it->second.distance_diff + it->second.angle_diff) { // філтрація по різниці сум дистанці та кута
             best_matches_map[match.ref_idx1] = match;
         }
+//        if (it == best_matches_map.end() || match.distance_diff < it->second.distance_diff) { // тільки по дистанції
+//            best_matches_map[match.ref_idx1] = match;
+//        }
     }
 
     std::vector<Match> best_matches;
