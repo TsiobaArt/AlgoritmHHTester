@@ -154,58 +154,148 @@ std::pair<double, double> FindLocation::findMyLocation() {
       qDebug() <<  "avgLat " << avgLat;
       qDebug() <<  "avgLon " << avgLon;
 
+      QGeoCoordinate geoTrilateration ;
+
+      geoTrilateration = trilateration(_allMatches);
+
+      qDebug() <<  "avgLat geoTrilateration latitude" << geoTrilateration.latitude();
+      qDebug() <<  "avgLon geoTrilateration longitude " << geoTrilateration.longitude();
+
+
       return {avgLat, avgLon};
     } else {
       return {0, 0}; // Return default coordinates if there aren't enough matches
     }
 }
 
+//QGeoCoordinate FindLocation::trilateration(const std::vector<Match>& allMatches)
+//{
+//    int n = allMatches.size();
 
-//std::pair<double, double> FindLocation::findMyLocation() {
-//        qDebug () <<  "FindLocation_ allMatches.size(); "  << _allMatches.size();
-//        if (_allMatches.size() >= 2) {
-//            auto point1 = _allMatches[0];
-//            auto point2 = _allMatches[1];
-//            auto point3 = _allMatches[2];
+//    if (n < 3) {
+//      std::cerr << "Need at least 3 matches." << std::endl;
+//      return QGeoCoordinate();
+//    }
 
-//            QGeoCoordinate coord1(point1.cand_idx1_lat, point1.cand_idx1_lon);
-//            QGeoCoordinate coord2(point2.cand_idx1_lat, point2.cand_idx1_lon);
-//            QGeoCoordinate coord3(point3.cand_idx1_lat, point3.cand_idx1_lon);
+//    Eigen::MatrixXd A(n, 2);
+//    Eigen::VectorXd b(n);
 
-//            double dist1 = point1.cand_idx1_Dist;
-//            double dist2 = point2.cand_idx1_Dist;
-//            double dist3 = point3.cand_idx1_Dist;
+//    for (int i = 0; i < n; i++) {
+//      double lat = allMatches[i].cand_idx1_lat - allMatches[0].cand_idx1_lat;
+//      double lon = allMatches[i].cand_idx1_lon - allMatches[0].cand_idx1_lon;
 
-//            double azimuth1AzimuthBearing = point1.cand_idx1_AzimuthBearing;
-//            double azimuth2AzimuthBearing = point2.cand_idx1_AzimuthBearing;
-//            double azimuth3AzimuthBearing = point3.cand_idx1_AzimuthBearing;
+//      qDebug() <<  "trilateriation lat " << allMatches[i].cand_idx1_lat ;
+//      qDebug() <<  "trilateriation lon " << lon;
+//      qDebug()<<  "dist " << allMatches[i].cand_idx1_Dist;
 
+//      A(i, 0) = 2 * lat;
+//      A(i, 1) = 2 * lon;
+//      b(i) = std::pow(allMatches[0].cand_idx1_Dist, 2) - std::pow(allMatches[i].cand_idx1_Dist, 2) - lat * lat - lon * lon;
+//    }
 
-//            double bearing1 = point1.cand_idx1_bearing;
-//            double bearing2 = point2.cand_idx1_bearing;
-//            double bearing3 = point3.cand_idx1_bearing;
+//    Eigen::Vector2d solution = A.colPivHouseholderQr().solve(b);
 
-//                // Get the new coordinates at the specified distance and azimuth
-//                QGeoCoordinate newCoord1 = coord1.atDistanceAndAzimuth(dist1, azimuth1AzimuthBearing + bearing1);
-//                QGeoCoordinate newCoord2 = coord2.atDistanceAndAzimuth(dist2, azimuth2AzimuthBearing + bearing2);
-//                QGeoCoordinate newCoord3 = coord3.atDistanceAndAzimuth(dist3, azimuth3AzimuthBearing + bearing3);
+//    double latitude = solution(0) + allMatches[0].cand_idx1_lat;
+//    double longitude = solution(1) + allMatches[0].cand_idx1_lon;
 
-
-//                    // Calculate the average latitude and longitude
-//                    double avgLat = (newCoord1.latitude() + newCoord2.latitude() + newCoord3.latitude()) / 3.0;
-//                    double avgLon = (newCoord1.longitude() + newCoord2.longitude() + newCoord3.longitude()) / 3.0;
-
-////                    double avgLat = newCoord1.latitude() ;
-////                    double avgLon = newCoord1.longitude() ;
-//                    qDebug() <<  "avgLat " << avgLat;
-//                    qDebug() <<  "avgLon " << avgLon;
-
-//                    return {avgLat, avgLon};
-//        } else {
-//            return {0, 0}; // Return default coordinates if there aren't enough matches
-//                }
+//    return QGeoCoordinate(latitude, longitude);
 //}
+//QGeoCoordinate FindLocation::trilateration(const std::vector<Match>& allMatches)
+//{
+//    int n = allMatches.size();
 
+//    if (n < 3) {
+//      std::cerr << "Need at least 3 matches." << std::endl;
+//      return QGeoCoordinate();
+//    }
+
+//    Eigen::MatrixXd A(n, 2);
+//    Eigen::VectorXd b(n);
+
+//    double lat0 = allMatches[0].cand_idx1_lat * M_PI / 180.0;
+//    double lon0 = allMatches[0].cand_idx1_lon * M_PI / 180.0;
+//    double R = 6371000; // Радіус Землі в метрах
+
+//    for (int i = 0; i < n; i++) {
+//      double lat = (allMatches[i].cand_idx1_lat - allMatches[0].cand_idx1_lat) * M_PI / 180.0;
+//      double lon = (allMatches[i].cand_idx1_lon - allMatches[0].cand_idx1_lon) * M_PI / 180.0;
+
+//      double x = R * cos(lat) * cos(lon) - R * cos(lat0) * cos(lon0);
+//      double y = R * cos(lat) * sin(lon) - R * cos(lat0) * sin(lon0);
+
+//      A(i, 0) = 2 * x;
+//      A(i, 1) = 2 * y;
+//      b(i) = std::pow(allMatches[0].cand_idx1_Dist, 2) - std::pow(allMatches[i].cand_idx1_Dist, 2) - x * x - y * y;
+//    }
+
+//    Eigen::Vector2d solution = A.colPivHouseholderQr().solve(b);
+
+//    // Перетворюємо рішення назад у географічні координати
+//    double x = solution(0);
+//    double y = solution(1);
+
+//    double latRad = asin(y / sqrt(x * x + y * y + R * R));
+//    double lonRad = atan2(y, x);
+
+//    double latitude = latRad * 180.0 / M_PI + allMatches[0].cand_idx1_lat;
+//    double longitude = lonRad * 180.0 / M_PI + allMatches[0].cand_idx1_lon;
+
+//    return QGeoCoordinate(latitude, longitude);
+//}
+QGeoCoordinate FindLocation::trilateration(const std::vector<Match>& allMatches) {
+    int n = allMatches.size();
+
+    if (n < 3) {
+      std::cerr << "Need at least 3 matches." << std::endl;
+      return QGeoCoordinate();
+    }
+
+    double lat0 = allMatches[0].cand_idx1_lat;
+    double lon0 = allMatches[0].cand_idx1_lon;
+
+    Eigen::MatrixXd A(n, 2);
+    Eigen::VectorXd b(n);
+
+    qDebug() << "Initial latitude: " << lat0;
+    qDebug() << "Initial longitude: " << lon0;
+
+    for (int i = 0; i < n; i++) {
+      double lati = allMatches[i].cand_idx1_lat;
+      double loni = allMatches[i].cand_idx1_lon;
+
+      // Перетворюємо географічні координати у плоскі
+      auto [xi, yi] = latLonToXY(lati, loni, lat0, lon0);
+      auto [x0, y0] = latLonToXY(lat0, lon0, lat0, lon0);
+
+      qDebug() << "Converted coordinates " << i << ": x=" << xi << " y=" << yi;
+
+      double di = std::sqrt(std::pow(xi - x0, 2) + std::pow(yi - y0, 2));
+
+      A(i, 0) = 2 * (xi - x0);
+      A(i, 1) = 2 * (yi - y0);
+      b(i) = std::pow(allMatches[0].cand_idx1_Dist, 2) - std::pow(allMatches[i].cand_idx1_Dist, 2) + std::pow(di, 2);
+    }
+
+    std::cout << "Matrix A:\n" << A << std::endl;
+    std::cout << "Vector b:\n" << b << std::endl;
+
+
+    Eigen::Vector2d solution = A.colPivHouseholderQr().solve(b);
+
+    double x = solution(0);
+    double y = solution(1);
+
+    qDebug() << "Solution x: " << x;
+    qDebug() << "Solution y: " << y;
+
+    // Перетворюємо плоскі координати назад у географічні
+    auto [latitude, longitude] = xyToLatLon(x, y, lat0, lon0);
+
+    qDebug() << "Final latitude: " << latitude;
+    qDebug() << "Final longitude: " << longitude;
+
+    return QGeoCoordinate(latitude, longitude);
+}
 
 //std::pair<double, double> FindLocation::findMyLocation()
 //{
@@ -256,51 +346,4 @@ std::pair<double, double> FindLocation::findMyLocation() {
 
 //    return {avgLat, avgLon};
 //}
-//std::pair<double, double> PointMatcher::solveSystem(double x1, double y1, double d1, double x2, double y2, double d2, double x3, double y3, double d3) // розвязування системи рівнять за допомогою методу Крамера (для знаходження своиїх коорлинат ).
-//{
-
-//      qDebug () <<   "x1:  " << x1;
-//      qDebug () <<   "x2:  " << x2;
-//      qDebug () <<   "x3:  " << x3;
-
-//      qDebug () <<   "y1:  " << y1;
-//      qDebug () <<   "y2:  " << y2;
-//      qDebug () <<   "y3:  " << y3;
-
-//      qDebug () <<   "d1:  " << d1;
-//      qDebug () <<   "d2:  " << d2;
-//      qDebug () <<   "d3:  " << d3;
-
-
-//    double a1 = 2*(x2 - x1);
-//    double b1 = 2*(y2 - y1);
-//    double c1 = pow(d1, 2) - pow(d2, 2) - pow(x1, 2) + pow(x2, 2) - pow(y1, 2) + pow(y2, 2);
-
-//    double a2 = 2*(x3 - x1);
-//    double b2 = 2*(y3 - y1);
-//    double c2 = pow(d1, 2) - pow(d3, 2) - pow(x1, 2) + pow(x3, 2) - pow(y1, 2) + pow(y3, 2);
-
-//    double det = a1*b2 - a2*b1;
-//    double x = (b2*c1 - b1*c2) / det;
-//    double y = (a1*c2 - a2*c1) / det;
-
-//    qDebug () <<   "x:  " << x;
-//    qDebug () <<   "y:  " << y;
-
-//    return {x, y};
-//}
-
-//std::pair<double, double> PointMatcher::solveSystem(double x1, double y1, double d1, double x2, double y2, double d2, double x3, double y3, double d3) {
-//    double A = 2*x2 - 2*x1;
-//    double B = 2*y2 - 2*y1;
-//    double C = d1*d1 - d2*d2 - x1*x1 + x2*x2 - y1*y1 + y2*y2;
-//    double D = 2*x3 - 2*x2;
-//    double E = 2*y3 - 2*y2;
-//    double F = d2*d2 - d3*d3 - x2*x2 + x3*x3 - y2*y2 + y3*y3;
-//    double x = (C*E - F*B) / (E*A - B*D);
-//    double y = (C*D - A*F) / (B*D - A*E);
-
-//    return {x, y};
-//}
-
 

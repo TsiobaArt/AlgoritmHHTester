@@ -267,7 +267,6 @@ void DataFromDB::processingData(const double rcs, const double distance, const d
                        sumDistance += data1.Distance;
                        sumBearing += data1.bearing;
                        sumAzimuthBearing += data1.AzimuthBearing;
-                       qDebug() << "sumDistance " << sumDistance;
                        count++;
                    } else {
                        // Точка має принаймні одну різницю, яка перевищує порогове значення, за винятком для подальшої обробки

@@ -63,13 +63,11 @@ QVariantList PointMatcher::findMatches(double distance_threshold, double angle_t
     QVariantList qmlMatches;
 
     // -------------- Тестую знаходження позиції
-//    _findLocation(best_matches);
-
     FindLocation locationFinder;
     std::pair<double, double> locationPair;
     locationPair = locationFinder.sortedDataMatches(best_matches);
-    qDebug () << "LOCATION " << locationPair.first;
-    qDebug () << "LOCATION " << locationPair.second;
+    qDebug () << "LOCATION  latitude  :" << locationPair.first;
+    qDebug () << "LOCATION  longitude :" << locationPair.second;
 
      _latitudeCentalPoint = locationPair.first;
      _longitudeCentalPoint = locationPair.second;
@@ -294,10 +292,10 @@ void PointMatcher::downloadDataBaseTest(const double signalStrength, const doubl
 
 void PointMatcher::downloadDBTecAndId(const QString nameTable)
 {
-    QString nameTable2 = "session_26_07_15_48_45"; // для швидкого тесту
-    mapTicAndId = dataFromDB->readTicCountAndId(nameTable2);
+//    QString nameTable2 = "session_26_07_15_48_45"; // для швидкого тесту
+//    mapTicAndId = dataFromDB->readTicCountAndId(nameTable2);
 
-//    mapTicAndId = dataFromDB->readTicCountAndId(nameTable);
+    mapTicAndId = dataFromDB->readTicCountAndId(nameTable);
 
 }
 

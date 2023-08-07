@@ -10,7 +10,7 @@
 #include <QVector>
 #include <iostream>
 #include <QGeoCoordinate>
-
+#include <eigen3/Eigen/Dense>
 class FindLocation : public QObject
 {
     Q_OBJECT
@@ -23,8 +23,21 @@ public:
 
     std::pair<double, double> findMyLocation();
 
+    QGeoCoordinate trilateration(const std::vector<Match>& allMatches) ;
 
+    // Функція для перетворення географічних координат в плоскі
+    std::pair<double, double> latLonToXY(double lat, double lon, double lat0, double lon0) {
+        double x = (lon - lon0) * cos(lat0) * 111.32;
+        double y = (lat - lat0) * 110.574;
+        return {x, y};
+    }
 
+    // Функція для перетворення плоских координат назад в географічні
+    std::pair<double, double> xyToLatLon(double x, double y, double lat0, double lon0) {
+        double lat = y / 110.574 + lat0;
+        double lon = x / (cos(lat0) * 111.32) + lon0;
+        return {lat, lon};
+    }
     // Приватні дані
 private:
     std::vector<Match> _allMatches; // Всі співпадіння

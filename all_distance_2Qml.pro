@@ -27,6 +27,8 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+INCLUDEPATH += /usr/include/eigen3
+
 HEADERS += \
     StructData.h \
     aimuth_Vinc.h \
