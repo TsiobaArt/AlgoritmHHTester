@@ -259,5 +259,51 @@ std::pair<double, double> FindLocation::findMyLocation() {
 
 //    return {avgLat, avgLon};
 //}
+//std::pair<double, double> PointMatcher::solveSystem(double x1, double y1, double d1, double x2, double y2, double d2, double x3, double y3, double d3) // розвязування системи рівнять за допомогою методу Крамера (для знаходження своиїх коорлинат ).
+//{
+
+//      qDebug () <<   "x1:  " << x1;
+//      qDebug () <<   "x2:  " << x2;
+//      qDebug () <<   "x3:  " << x3;
+
+//      qDebug () <<   "y1:  " << y1;
+//      qDebug () <<   "y2:  " << y2;
+//      qDebug () <<   "y3:  " << y3;
+
+//      qDebug () <<   "d1:  " << d1;
+//      qDebug () <<   "d2:  " << d2;
+//      qDebug () <<   "d3:  " << d3;
+
+
+//    double a1 = 2*(x2 - x1);
+//    double b1 = 2*(y2 - y1);
+//    double c1 = pow(d1, 2) - pow(d2, 2) - pow(x1, 2) + pow(x2, 2) - pow(y1, 2) + pow(y2, 2);
+
+//    double a2 = 2*(x3 - x1);
+//    double b2 = 2*(y3 - y1);
+//    double c2 = pow(d1, 2) - pow(d3, 2) - pow(x1, 2) + pow(x3, 2) - pow(y1, 2) + pow(y3, 2);
+
+//    double det = a1*b2 - a2*b1;
+//    double x = (b2*c1 - b1*c2) / det;
+//    double y = (a1*c2 - a2*c1) / det;
+
+//    qDebug () <<   "x:  " << x;
+//    qDebug () <<   "y:  " << y;
+
+//    return {x, y};
+//}
+
+//std::pair<double, double> PointMatcher::solveSystem(double x1, double y1, double d1, double x2, double y2, double d2, double x3, double y3, double d3) {
+//    double A = 2*x2 - 2*x1;
+//    double B = 2*y2 - 2*y1;
+//    double C = d1*d1 - d2*d2 - x1*x1 + x2*x2 - y1*y1 + y2*y2;
+//    double D = 2*x3 - 2*x2;
+//    double E = 2*y3 - 2*y2;
+//    double F = d2*d2 - d3*d3 - x2*x2 + x3*x3 - y2*y2 + y3*y3;
+//    double x = (C*E - F*B) / (E*A - B*D);
+//    double y = (C*D - A*F) / (B*D - A*E);
+
+//    return {x, y};
+//}
 
 
