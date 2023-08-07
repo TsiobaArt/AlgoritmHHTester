@@ -262,10 +262,10 @@ void PointMatcher::downloadDataBaseTest(const double signalStrength, const doubl
 {
 
 //    _reference_points.clear();
-    QString nameTable2 = "session_26_07_15_48_45"; //
-    dataFromDB->loadData(nameTable2,rcs,signalStrength, tickNumber); // для швидкого тесту
+//    QString nameTable2 = "session_26_07_15_48_45"; //
+//    dataFromDB->loadData(nameTable2,rcs,signalStrength, tickNumber); // для швидкого тесту
 
-//    dataFromDB->loadData(nameTable,rcs,signalStrength, tickNumber);
+    dataFromDB->loadData(nameTable,rcs,signalStrength, tickNumber);
     _candidate_points = dataFromDB->getCoordinates();
     mapTicAndId = dataFromDB->dataTicAndId;
 

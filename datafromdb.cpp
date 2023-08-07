@@ -245,6 +245,9 @@ void DataFromDB::processingData(const double rcs, const double distance, const d
        // ---------------------------------------------------------------
        for (const auto& cluster : clusters) {
                double sumLat = 0.0, sumLon = 0.0;
+               double sumDistance = 0.0;
+               double sumBearing = 0.0;
+               double sumAzimuthBearing = 0.0;
                int count = 0;
                std::vector<StructData> exceedsThreshold;
 
@@ -261,6 +264,10 @@ void DataFromDB::processingData(const double rcs, const double distance, const d
                        // Усі відмінності всередині кластера знаходяться в межах порога, додати до розрахунку центроїда
                        sumLat += data1.latitude;
                        sumLon += data1.longitude;
+                       sumDistance += data1.Distance;
+                       sumBearing += data1.bearing;
+                       sumAzimuthBearing += data1.AzimuthBearing;
+                       qDebug() << "sumDistance " << sumDistance;
                        count++;
                    } else {
                        // Точка має принаймні одну різницю, яка перевищує порогове значення, за винятком для подальшої обробки
@@ -273,6 +280,9 @@ void DataFromDB::processingData(const double rcs, const double distance, const d
                    Point centroid;
                    centroid.lat = sumLat / count;
                    centroid.lon = sumLon / count;
+                   centroid.dist = sumDistance / count;
+                   centroid.bearing = sumBearing / count;
+                   centroid.AzimuthBearing = sumAzimuthBearing / count;
                    m_coordinates.push_back(centroid);
                }
 
@@ -281,6 +291,9 @@ void DataFromDB::processingData(const double rcs, const double distance, const d
                    Point point;
                    point.lat = data.latitude;
                    point.lon = data.longitude;
+                   point.dist = data.Distance;
+                   point.bearing = data.bearing;
+                   point.AzimuthBearing = data.AzimuthBearing;
                    m_coordinates.push_back(point);
                }
            }

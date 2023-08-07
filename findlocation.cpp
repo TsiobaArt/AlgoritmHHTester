@@ -29,9 +29,6 @@ std::pair<double, double> FindLocation::sortedDataMatches(const std::vector<Matc
       qDebug() <<      "match cand_idx1_Dist" << match.cand_idx1_Dist;
       qDebug() <<      "match cand_idx1_bearing" << match.cand_idx1_bearing;
       qDebug() <<      "match cand_idx1_AzimuthBearing" << match.cand_idx1_AzimuthBearing;
-
-
-
 }
 
 
