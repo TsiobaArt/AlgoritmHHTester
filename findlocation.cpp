@@ -154,12 +154,12 @@ std::pair<double, double> FindLocation::findMyLocation() {
       qDebug() <<  "avgLat " << avgLat;
       qDebug() <<  "avgLon " << avgLon;
 
-      QGeoCoordinate geoTrilateration ;
+//      QGeoCoordinate geoTrilateration ;
 
-      geoTrilateration = trilateration(_allMatches);
+//      geoTrilateration = trilateration(_allMatches);
 
-      qDebug() <<  "avgLat geoTrilateration latitude" << geoTrilateration.latitude();
-      qDebug() <<  "avgLon geoTrilateration longitude " << geoTrilateration.longitude();
+//      qDebug() <<  "avgLat geoTrilateration latitude" << geoTrilateration.latitude();
+//      qDebug() <<  "avgLon geoTrilateration longitude " << geoTrilateration.longitude();
 
 
       return {avgLat, avgLon};
@@ -242,60 +242,60 @@ std::pair<double, double> FindLocation::findMyLocation() {
 
 //    return QGeoCoordinate(latitude, longitude);
 //}
-QGeoCoordinate FindLocation::trilateration(const std::vector<Match>& allMatches) {
-    int n = allMatches.size();
+//QGeoCoordinate FindLocation::trilateration(const std::vector<Match>& allMatches) {
+//    int n = allMatches.size();
 
-    if (n < 3) {
-      std::cerr << "Need at least 3 matches." << std::endl;
-      return QGeoCoordinate();
-    }
+//    if (n < 3) {
+//      std::cerr << "Need at least 3 matches." << std::endl;
+//      return QGeoCoordinate();
+//    }
 
-    double lat0 = allMatches[0].cand_idx1_lat;
-    double lon0 = allMatches[0].cand_idx1_lon;
+//    double lat0 = allMatches[0].cand_idx1_lat;
+//    double lon0 = allMatches[0].cand_idx1_lon;
 
-    Eigen::MatrixXd A(n, 2);
-    Eigen::VectorXd b(n);
+//    Eigen::MatrixXd A(n, 2);
+//    Eigen::VectorXd b(n);
 
-    qDebug() << "Initial latitude: " << lat0;
-    qDebug() << "Initial longitude: " << lon0;
+//    qDebug() << "Initial latitude: " << lat0;
+//    qDebug() << "Initial longitude: " << lon0;
 
-    for (int i = 0; i < n; i++) {
-      double lati = allMatches[i].cand_idx1_lat;
-      double loni = allMatches[i].cand_idx1_lon;
+//    for (int i = 0; i < n; i++) {
+//      double lati = allMatches[i].cand_idx1_lat;
+//      double loni = allMatches[i].cand_idx1_lon;
 
-      // Перетворюємо географічні координати у плоскі
-      auto [xi, yi] = latLonToXY(lati, loni, lat0, lon0);
-      auto [x0, y0] = latLonToXY(lat0, lon0, lat0, lon0);
+//      // Перетворюємо географічні координати у плоскі
+//      auto [xi, yi] = latLonToXY(lati, loni, lat0, lon0);
+//      auto [x0, y0] = latLonToXY(lat0, lon0, lat0, lon0);
 
-      qDebug() << "Converted coordinates " << i << ": x=" << xi << " y=" << yi;
+//      qDebug() << "Converted coordinates " << i << ": x=" << xi << " y=" << yi;
 
-      double di = std::sqrt(std::pow(xi - x0, 2) + std::pow(yi - y0, 2));
+//      double di = std::sqrt(std::pow(xi - x0, 2) + std::pow(yi - y0, 2));
 
-      A(i, 0) = 2 * (xi - x0);
-      A(i, 1) = 2 * (yi - y0);
-      b(i) = std::pow(allMatches[0].cand_idx1_Dist, 2) - std::pow(allMatches[i].cand_idx1_Dist, 2) + std::pow(di, 2);
-    }
+//      A(i, 0) = 2 * (xi - x0);
+//      A(i, 1) = 2 * (yi - y0);
+//      b(i) = std::pow(allMatches[0].cand_idx1_Dist, 2) - std::pow(allMatches[i].cand_idx1_Dist, 2) + std::pow(di, 2);
+//    }
 
-    std::cout << "Matrix A:\n" << A << std::endl;
-    std::cout << "Vector b:\n" << b << std::endl;
+//    std::cout << "Matrix A:\n" << A << std::endl;
+//    std::cout << "Vector b:\n" << b << std::endl;
 
 
-    Eigen::Vector2d solution = A.colPivHouseholderQr().solve(b);
+//    Eigen::Vector2d solution = A.colPivHouseholderQr().solve(b);
 
-    double x = solution(0);
-    double y = solution(1);
+//    double x = solution(0);
+//    double y = solution(1);
 
-    qDebug() << "Solution x: " << x;
-    qDebug() << "Solution y: " << y;
+//    qDebug() << "Solution x: " << x;
+//    qDebug() << "Solution y: " << y;
 
-    // Перетворюємо плоскі координати назад у географічні
-    auto [latitude, longitude] = xyToLatLon(x, y, lat0, lon0);
+//    // Перетворюємо плоскі координати назад у географічні
+//    auto [latitude, longitude] = xyToLatLon(x, y, lat0, lon0);
 
-    qDebug() << "Final latitude: " << latitude;
-    qDebug() << "Final longitude: " << longitude;
+//    qDebug() << "Final latitude: " << latitude;
+//    qDebug() << "Final longitude: " << longitude;
 
-    return QGeoCoordinate(latitude, longitude);
-}
+//    return QGeoCoordinate(latitude, longitude);
+//}
 
 //std::pair<double, double> FindLocation::findMyLocation()
 //{
