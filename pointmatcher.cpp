@@ -427,6 +427,7 @@ void PointMatcher::_comparePoints(size_t i, size_t j, double distance_threshold,
                   match.cand_idx1_bearing = _candidate_points[k].bearing;
 
 
+
                   match.cand_idx2_lat = _candidate_points[l].lat;
                   match.cand_idx2_lon = _candidate_points[l].lon;
                   match.cand_idx2_Dist = _candidate_points[l].dist;
@@ -434,6 +435,11 @@ void PointMatcher::_comparePoints(size_t i, size_t j, double distance_threshold,
                   match.cand_idx2_Rcs = _candidate_points[l].Rcs;
                   match.cand_idx2_bearing = _candidate_points[l].bearing;
 
+                  match.ref_idx1_lat = _reference_points[i].lat;
+                  match.ref_idx1_lot = _reference_points[i].lon;
+
+                  match.ref_idx2_lat = _reference_points[j].lat;
+                  match.ref_idx2_lot = _reference_points[j].lon;
 
                   {
                       QMutexLocker locker(&_matches_mutex);

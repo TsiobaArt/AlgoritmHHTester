@@ -502,11 +502,11 @@ Item {
                                     console.log ("latitudeCalc " , latitudeCalc);
                                     console.log ("longitudeCalc " , longitudeCalc);
 
-                                    centralPoint.coordinate.latitude = latitudeCalc;
-                                    centralPoint.coordinate.longitude = longitudeCalc;
-                                    infoMenuCoordinateCentalPoint.latitudeС = latitudeCalc;
-                                    infoMenuCoordinateCentalPoint.longitudeС = longitudeCalc;
-//                                    infoMenuCoordinateCentalPoint.diference = QtPositioning.coordinate(latitudeCalc,longitudeCalc).distance
+//                                    centralPoint.coordinate.latitude = latitudeCalc;
+//                                    centralPoint.coordinate.longitude = longitudeCalc;
+//                                    infoMenuCoordinateCentalPoint.latitudeС = latitudeCalc;
+//                                    infoMenuCoordinateCentalPoint.longitudeС = longitudeCalc;
+////                                    infoMenuCoordinateCentalPoint.diference = QtPositioning.coordinate(latitudeCalc,longitudeCalc).distance
 
                                 }
                             }

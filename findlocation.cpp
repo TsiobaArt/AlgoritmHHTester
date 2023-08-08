@@ -53,82 +53,35 @@ std::pair<double, double> FindLocation::solveSystem(double x1, double y1, double
     return {x, y};
 }
 
-
-//std::pair<double, double> FindLocation::findMyLocation()
-//{
-//    qDebug () <<  "FindLocation_ allMatches.size(); "  << _allMatches.size();
-////    if (_allMatches.size() >= 2) {
-//        auto point1 = _allMatches[0];
-//        auto point2 = _allMatches[1];
-//        auto point3 = _allMatches[2];
-
-////        //   ----  тест вручну
-////        QGeoCoordinate coordCentr;
-////        coordCentr.setLatitude(48.484095);
-////        coordCentr.setLongitude(24.466879);
-
-////        QGeoCoordinate coord1;
-////        coord1.setLatitude(48.52014269118956);
-////        coord1.setLongitude(24.4611438434119);
-
-////        QGeoCoordinate coord2;
-////        coord2.setLatitude(48.50626180537989);
-////        coord2.setLongitude(24.4771927081015);
-
-////        QGeoCoordinate coord3;
-////        coord3.setLatitude(48.502215407637294);
-////        coord3.setLongitude(24.4723471243014);
-
-
-////        double dist1 = coordCentr.distanceTo(coord1);
-////        double dist2 = coordCentr.distanceTo(coord2);
-////        double dist3 = coordCentr.distanceTo(coord3);
-
-
-////        qDebug ()  << "FindLocation::findMyLocation() dist1 " << dist1;
-////        qDebug ()  << "FindLocation::findMyLocation() dist2 " << dist2;
-////        qDebug ()  << "FindLocation::findMyLocation() dist3 " << dist3;
-
-
-////        qDebug ()  << "FindLocation::findMyLocation() coordCentr lat " << coordCentr.latitude() << " lon " << coordCentr.longitude();
-////        qDebug ()  << "FindLocation::findMyLocation() coord1 lat " << coord1.latitude() << " lon " << coord1.longitude();
-////        qDebug ()  << "FindLocation::findMyLocation() coord2 lat " << coord2.latitude() << " lon " << coord2.longitude();
-////        qDebug ()  << "FindLocation::findMyLocation() coord2 lat " << coord3.latitude() << " lon " << coord3.longitude();
-
-
-
-
-////        auto coordinates = solveSystem(coord1.latitude(), coord1.longitude(), dist1,
-////                                       coord2.latitude(), coord2.longitude(), dist2,
-////                                       coord3.latitude(), coord3.longitude(), dist3);
-
-////        //   ----  тест вручну
-
-
-
-//        qDebug () << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ " << point1.cand_idx1_AzimuthBearing;
-//        auto coordinates = solveSystem(point1.cand_idx1_lat, point1.cand_idx1_lon, point1.cand_idx1_Dist,
-//                                       point2.cand_idx1_lat, point2.cand_idx1_lon, point2.cand_idx1_Dist,
-//                                       point3.cand_idx1_lat, point3.cand_idx1_lon, point3.cand_idx1_Dist);
-
-
-//        return coordinates;
-////    } else {
-////        return {0, 0}; // Return default coordinates if there aren't enough matches
-//        //    }
-//}
 std::pair<double, double> FindLocation::findMyLocation() {
     qDebug () <<  "FindLocation_ allMatches.size(); "  << _allMatches.size();
     if (_allMatches.size() >= 2) {
       double totalLat = 0.0;
       double totalLon = 0.0;
+      double totalLatOffset = 0.0;
+      double totalLonOffset = 0.0;
 
       for (auto& point : _allMatches) {
           QGeoCoordinate coord(point.cand_idx1_lat, point.cand_idx1_lon);
+
+
           double dist = point.cand_idx1_Dist;
           double azimuthAzimuthBearing = point.cand_idx1_AzimuthBearing;
           double bearing = point.cand_idx1_bearing;
 
+          // -----------------------------------------------------------------калібровка
+          QGeoCoordinate referenceCoord(point.ref_idx1_lat, point.ref_idx1_lot);
+          double latOffset = referenceCoord.latitude() - coord.latitude();
+          double lonOffset = referenceCoord.longitude() - coord.longitude();
+
+          qDebug() << "referenceCoord.longitude() "  << coord.longitude();
+          qDebug() << "referenceCoord.latitude() "  << coord.latitude();
+
+
+          totalLatOffset += latOffset;
+          totalLonOffset += lonOffset;
+
+          // -----------------------------------------------------------------калібровка
 
           double sumAzimuth = azimuthAzimuthBearing + bearing;
           double reverseAzimuth = sumAzimuth + 180.0;
@@ -136,37 +89,120 @@ std::pair<double, double> FindLocation::findMyLocation() {
               reverseAzimuth -= 360.0;
           }
 
-          // Get the new coordinates at the specified distance and azimuth
-          QGeoCoordinate newCoord = coord.atDistanceAndAzimuth(dist, reverseAzimuth);
 
-          // Accumulate latitudes and longitudes
+
+          QGeoCoordinate newCoord = referenceCoord.atDistanceAndAzimuth(dist, reverseAzimuth);
           totalLat += newCoord.latitude();
           totalLon += newCoord.longitude();
+
+          qDebug() << "totalLat " << totalLat;
+          qDebug() << "totalLon " << totalLon;
+
 
       }
 
 
+      // -----------------------------------------------------------------калібровка
+      // Розрахунок середнього відхилення
+      double avgLatOffset = totalLatOffset / _allMatches.size();
+      double avgLonOffset = totalLonOffset / _allMatches.size();
+      qDebug() <<  "avgLatOffset " <<  avgLatOffset;
+      qDebug() <<  "avgLonOffset " <<  avgLonOffset;
 
-      // Calculate the average latitude and longitude
+      // -----------------------------------------------------------------калібровка
+
+
       double avgLat = totalLat / _allMatches.size();
       double avgLon = totalLon / _allMatches.size();
+
+      // Застосування середнього відхилення до розрахованої позиції
+      double calibratedLat = avgLat - avgLatOffset;
+      double calibratedLon = avgLon - avgLonOffset;
 
       qDebug() <<  "avgLat " << avgLat;
       qDebug() <<  "avgLon " << avgLon;
 
-//      QGeoCoordinate geoTrilateration ;
-
-//      geoTrilateration = trilateration(_allMatches);
-
-//      qDebug() <<  "avgLat geoTrilateration latitude" << geoTrilateration.latitude();
-//      qDebug() <<  "avgLon geoTrilateration longitude " << geoTrilateration.longitude();
+      qDebug() << "calibratedLat " << calibratedLat;
+      qDebug() << "calibratedLon " << calibratedLon;
 
 
-      return {avgLat, avgLon};
+      //      return {avgLat, avgLon};
+      return {calibratedLat,calibratedLon };
+
     } else {
       return {0, 0}; // Return default coordinates if there aren't enough matches
     }
 }
+
+//std::pair<double, double> FindLocation::findMyLocation() {
+//    qDebug () <<  "FindLocation_ allMatches.size(); "  << _allMatches.size();
+//    if (_allMatches.size() >= 2) {
+//      double totalLat = 0.0;
+//      double totalLon = 0.0;
+//      double totalLatOffset = 0.0;
+//      double totalLonOffset = 0.0;
+
+//      for (auto& point : _allMatches) {
+//          QGeoCoordinate coord(point.cand_idx1_lat, point.cand_idx1_lon);
+
+
+//          double dist = point.cand_idx1_Dist;
+//          double azimuthAzimuthBearing = point.cand_idx1_AzimuthBearing;
+//          double bearing = point.cand_idx1_bearing;
+
+//          // -----------------------------------------------------------------калібровка
+//          QGeoCoordinate referenceCoord(point.ref_idx1_lat, point.ref_idx1_lot);
+//          double latOffset = referenceCoord.latitude() - coord.latitude();
+//          double lonOffset = referenceCoord.longitude() - coord.longitude();
+
+//          totalLatOffset += latOffset;
+//          totalLonOffset += lonOffset;
+
+//          // -----------------------------------------------------------------калібровка
+
+//          double sumAzimuth = azimuthAzimuthBearing + bearing;
+//          double reverseAzimuth = sumAzimuth + 180.0;
+//          if (reverseAzimuth >= 360.0) {
+//              reverseAzimuth -= 360.0;
+//          }
+
+
+
+//          QGeoCoordinate newCoord = coord.atDistanceAndAzimuth(dist, reverseAzimuth);
+//          totalLat += newCoord.latitude();
+//          totalLon += newCoord.longitude();
+
+//      }
+
+
+//      // -----------------------------------------------------------------калібровка
+//      // Розрахунок середнього відхилення
+//      double avgLatOffset = totalLatOffset / _allMatches.size();
+//      double avgLonOffset = totalLonOffset / _allMatches.size();
+//      // -----------------------------------------------------------------калібровка
+
+
+//      double avgLat = totalLat / _allMatches.size();
+//      double avgLon = totalLon / _allMatches.size();
+
+//      // Застосування середнього відхилення до розрахованої позиції
+//      double calibratedLat = avgLat + avgLatOffset;
+//      double calibratedLon = avgLon + avgLonOffset;
+
+//      qDebug() <<  "avgLat " << avgLat;
+//      qDebug() <<  "avgLon " << avgLon;
+
+//      qDebug() << "calibratedLat " << calibratedLat;
+//      qDebug() << "calibratedLon " << calibratedLon;
+
+
+////      return {avgLat, avgLon};
+//      return {avgLat,avgLon };
+
+//    } else {
+//      return {0, 0}; // Return default coordinates if there aren't enough matches
+//    }
+//}
 
 //QGeoCoordinate FindLocation::trilateration(const std::vector<Match>& allMatches)
 //{

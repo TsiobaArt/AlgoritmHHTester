@@ -96,6 +96,13 @@ Window { // варіант де результат передається по �
         itemMap2.centralPoint.coordinate.latitude = latitudeCalc
         itemMap2.centralPoint.coordinate.longitude = longitudeCalc
 
+        var center = QtPositioning.coordinate(infoMenuCoordinateCentalPoint.latitudeR,infoMenuCoordinateCentalPoint.longitudeR )
+        var cent2 = QtPositioning.coordinate(infoMenuCoordinateCentalPoint.latitudeС,infoMenuCoordinateCentalPoint.longitudeС )
+
+
+        infoMenuCoordinateCentalPoint.diference = center.distanceTo(cent2).toFixed(1)
+        console.log("center.distanceTo(cent2) " , center.distanceTo(cent2) )
+
     }
 
     function pointToGeoCoordinate(point) {

@@ -63,7 +63,7 @@ Item {
                 spacing: 10
                 anchors.horizontalCenter: parent.horizontalCenter
                 Text {id: diferenceTittle; color: "white"; text: "Різниця -";  horizontalAlignment: Text.AlignHCenter; font.pointSize: 9; }
-                Text {id: diferenceValue; color: "white"; text: longitudeС + " м.";  horizontalAlignment: Text.AlignHCenter; font.pointSize: 9; }
+                Text {id: diferenceValue; color: "white"; text: diference + " м.";  horizontalAlignment: Text.AlignHCenter; font.pointSize: 9; }
             }
 
         }
