@@ -91,8 +91,8 @@ Window { // варіант де результат передається по �
 
         centralPoint.coordinate.latitude = latitudeCalc;
         centralPoint.coordinate.longitude = longitudeCalc;
-        infoMenuCoordinateCentalPoint.latitudeС = latitudeCalc;
-        infoMenuCoordinateCentalPoint.longitudeС = longitudeCalc;
+        infoMenuCoordinateCentalPoint.latitudeС = latitudeCalc.toFixed(6);
+        infoMenuCoordinateCentalPoint.longitudeС = longitudeCalc.toFixed(6);
         itemMap2.centralPoint.coordinate.latitude = latitudeCalc
         itemMap2.centralPoint.coordinate.longitude = longitudeCalc
 
